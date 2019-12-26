@@ -285,7 +285,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/26/hello-world/" itemprop="url">leetcode 刷题笔记</a></h1>
+                <a class="post-title-link" href="/2019/12/26/hello-world/" itemprop="url">Leetcode Note for SQL</a></h1>
         
 
         <div class="post-meta">
@@ -359,7 +359,7 @@
       
         
           
-            <h2 id="Leetcode-Note-for-SQL"><a href="#Leetcode-Note-for-SQL" class="headerlink" title="Leetcode Note for SQL"></a>Leetcode Note for SQL</h2><h3 id="1251-Average-Selling-Price"><a href="#1251-Average-Selling-Price" class="headerlink" title="1251. Average Selling Price"></a>1251. Average Selling Price</h3><p>My solution:</p>
+            <h2 id="1251-Average-Selling-Price"><a href="#1251-Average-Selling-Price" class="headerlink" title="1251. Average Selling Price"></a>1251. Average Selling Price</h2><p>My solution:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> t2.product_id, <span class="keyword">ROUND</span>(<span class="keyword">SUM</span>(t2.total_price) / <span class="keyword">SUM</span>(t2.units),<span class="number">2</span>) average_price</span><br><span class="line"><span class="keyword">from</span> (</span><br><span class="line">    <span class="keyword">select</span> t1.product_id, t1.units, t1.units * t1.price total_price</span><br><span class="line">    <span class="keyword">from</span> (</span><br><span class="line">        <span class="keyword">select</span> a.product_id, a.units, b.price</span><br><span class="line">        <span class="keyword">from</span> UnitsSold a</span><br><span class="line">        <span class="keyword">left</span> <span class="keyword">join</span> Prices b</span><br><span class="line">        <span class="keyword">on</span> a.product_id = b.product_id <span class="keyword">and</span> a.purchase_date &gt;= b.start_date <span class="keyword">and</span> a.purchase_date &lt;= b.end_date</span><br><span class="line">    ) t1</span><br><span class="line">) t2</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> t2.product_id</span><br></pre></td></tr></table></figure>
 
           
