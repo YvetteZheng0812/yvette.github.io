@@ -86,15 +86,15 @@
 
 
 
-<meta name="description" content="leetcode 刷题笔记1251. Average Selling Price题目： 1234567891011+---------------+---------+| Column Name   | Type    |+---------------+---------+| product_id    | int     || start_date    | date    || end_da">
+<meta name="description" content="Leetcode Note for SQL1251. Average Selling PriceMy solution: 1234567891011select t2.product_id, ROUND(SUM(t2.total_price) &#x2F; SUM(t2.units),2) average_pricefrom (    select t1.product_id, t1.units, t1.u">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
+<meta property="og:title" content="leetcode 刷题笔记">
 <meta property="og:url" content="http://yoursite.com/2019/12/26/hello-world/index.html">
 <meta property="og:site_name" content="Yvette&#39;s Blog">
-<meta property="og:description" content="leetcode 刷题笔记1251. Average Selling Price题目： 1234567891011+---------------+---------+| Column Name   | Type    |+---------------+---------+| product_id    | int     || start_date    | date    || end_da">
+<meta property="og:description" content="Leetcode Note for SQL1251. Average Selling PriceMy solution: 1234567891011select t2.product_id, ROUND(SUM(t2.total_price) &#x2F; SUM(t2.units),2) average_pricefrom (    select t1.product_id, t1.units, t1.u">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-26T05:53:09.741Z">
-<meta property="article:modified_time" content="2019-12-26T07:06:05.741Z">
+<meta property="article:modified_time" content="2019-12-26T07:13:51.152Z">
 <meta property="article:author" content="Yvette Zheng">
 <meta property="article:tag" content="tag1">
 <meta property="article:tag" content="tag2">
@@ -134,7 +134,7 @@
 
 
 
-  <title>Hello World | Yvette's Blog</title>
+  <title>leetcode 刷题笔记 | Yvette's Blog</title>
   
 
 
@@ -288,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode 刷题笔记</h1>
         
 
         <div class="post-meta">
@@ -360,10 +360,8 @@
       
 
       
-        <h2 id="leetcode-刷题笔记"><a href="#leetcode-刷题笔记" class="headerlink" title="leetcode 刷题笔记"></a>leetcode 刷题笔记</h2><h3 id="1251-Average-Selling-Price"><a href="#1251-Average-Selling-Price" class="headerlink" title="1251. Average Selling Price"></a>1251. Average Selling Price</h3><p>题目：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+---------------+---------+</span><br><span class="line">| Column Name   | Type    |</span><br><span class="line">+---------------+---------+</span><br><span class="line">| product_id    | int     |</span><br><span class="line">| start_date    | date    |</span><br><span class="line">| end_date      | date    |</span><br><span class="line">| price         | int     |</span><br><span class="line">+---------------+---------+</span><br><span class="line">(product_id, start_date, end_date) is the primary key for this table.</span><br><span class="line">Each row of this table indicates the price of the product_id in the period from start_date to end_date.</span><br><span class="line">For each product_id there will be no two overlapping periods. That means there will be no two intersecting periods for the same product_id.</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">select</span> t2.product_id, <span class="keyword">ROUND</span>(<span class="keyword">SUM</span>(t2.total_price) / <span class="keyword">SUM</span>(t2.units),<span class="number">2</span>) average_price</span><br><span class="line"><span class="keyword">from</span> (</span><br><span class="line">    <span class="keyword">select</span> t1.product_id, t1.units, t1.units * t1.price total_price</span><br><span class="line">    <span class="keyword">from</span> (</span><br><span class="line">        <span class="keyword">select</span> a.product_id, a.units, b.price</span><br><span class="line">        <span class="keyword">from</span> UnitsSold a</span><br><span class="line">        <span class="keyword">left</span> <span class="keyword">join</span> Prices b</span><br><span class="line">        <span class="keyword">on</span> a.product_id = b.product_id <span class="keyword">and</span> a.purchase_date &gt;= b.start_date <span class="keyword">and</span> a.purchase_date &lt;= b.end_date</span><br><span class="line">    ) t1</span><br><span class="line">) t2</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> t2.product_id</span><br></pre></td></tr></table></figure>
+        <h2 id="Leetcode-Note-for-SQL"><a href="#Leetcode-Note-for-SQL" class="headerlink" title="Leetcode Note for SQL"></a>Leetcode Note for SQL</h2><h3 id="1251-Average-Selling-Price"><a href="#1251-Average-Selling-Price" class="headerlink" title="1251. Average Selling Price"></a>1251. Average Selling Price</h3><p>My solution:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> t2.product_id, <span class="keyword">ROUND</span>(<span class="keyword">SUM</span>(t2.total_price) / <span class="keyword">SUM</span>(t2.units),<span class="number">2</span>) average_price</span><br><span class="line"><span class="keyword">from</span> (</span><br><span class="line">    <span class="keyword">select</span> t1.product_id, t1.units, t1.units * t1.price total_price</span><br><span class="line">    <span class="keyword">from</span> (</span><br><span class="line">        <span class="keyword">select</span> a.product_id, a.units, b.price</span><br><span class="line">        <span class="keyword">from</span> UnitsSold a</span><br><span class="line">        <span class="keyword">left</span> <span class="keyword">join</span> Prices b</span><br><span class="line">        <span class="keyword">on</span> a.product_id = b.product_id <span class="keyword">and</span> a.purchase_date &gt;= b.start_date <span class="keyword">and</span> a.purchase_date &lt;= b.end_date</span><br><span class="line">    ) t1</span><br><span class="line">) t2</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> t2.product_id</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -520,7 +518,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-刷题笔记"><span class="nav-number">1.</span> <span class="nav-text">leetcode 刷题笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1251-Average-Selling-Price"><span class="nav-number">1.1.</span> <span class="nav-text">1251. Average Selling Price</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-Note-for-SQL"><span class="nav-number">1.</span> <span class="nav-text">Leetcode Note for SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1251-Average-Selling-Price"><span class="nav-number">1.1.</span> <span class="nav-text">1251. Average Selling Price</span></a></li></ol></li></ol></div>
             
 
           </div>
