@@ -359,7 +359,8 @@
       
         
           
-            <h2 id="我是小骚骚"><a href="#我是小骚骚" class="headerlink" title="我是小骚骚"></a>我是小骚骚</h2>
+            <h2 id="leetcode-刷题笔记"><a href="#leetcode-刷题笔记" class="headerlink" title="leetcode 刷题笔记"></a>leetcode 刷题笔记</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#1251</span><br><span class="line">select t2.product_id, ROUND(SUM(t2.total_price) &#x2F; SUM(t2.units),2) average_price</span><br><span class="line">from (</span><br><span class="line">    select t1.product_id, t1.units, t1.units * t1.price total_price</span><br><span class="line">    from (</span><br><span class="line">        select a.product_id, a.units, b.price</span><br><span class="line">        from UnitsSold a</span><br><span class="line">        left join Prices b</span><br><span class="line">        on a.product_id &#x3D; b.product_id and a.purchase_date &gt;&#x3D; b.start_date and a.purchase_date &lt;&#x3D; b.end_date</span><br><span class="line">    ) t1</span><br><span class="line">) t2</span><br><span class="line">group by t2.product_id</span><br></pre></td></tr></table></figure>
+
           
         
       
