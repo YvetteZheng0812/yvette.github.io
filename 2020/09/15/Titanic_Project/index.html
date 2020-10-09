@@ -27,18 +27,18 @@
 <meta property="og:site_name" content="Yvette&#39;s Blog">
 <meta property="og:description" content="This is an exploration of the Titanic data.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/Titanic_Project/output_12_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/Titanic_Project/output_12_0.png">
 <meta property="og:image" content="http://yoursite.com/2020/09/15/Titanic_Project/output_14_0.png">
-<meta property="og:image" content="http://yoursite.com/Titanic_Project/output_17_0.png">
-<meta property="og:image" content="http://yoursite.com/_posts/Titanic_Project/output_20_0.png">
-<meta property="og:image" content="http://yoursite.com/Users/zhengyaohong/hexo/source/_posts/Titanic_Project/output_23_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/Titanic_Project/output_17_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/Titanic_Project/output_20_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/15/Titanic_Project/output_23_0.png">
 <meta property="article:published_time" content="2020-09-15T17:22:43.881Z">
-<meta property="article:modified_time" content="2020-09-15T17:39:14.228Z">
+<meta property="article:modified_time" content="2020-10-09T09:14:57.155Z">
 <meta property="article:author" content="Yvette Zheng">
 <meta property="article:tag" content="Data Visualization">
 <meta property="article:tag" content="Exploratory Data Analysis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/Titanic_Project/output_12_0.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/15/Titanic_Project/output_12_0.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/15/Titanic_Project/">
 
@@ -195,10 +195,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-09-15 10:22:43 / Modified: 10:39:14" itemprop="dateCreated datePublished" datetime="2020-09-15T10:22:43-07:00">2020-09-15</time>
+              <time title="Created: 2020-09-15 10:22:43" itemprop="dateCreated datePublished" datetime="2020-09-15T10:22:43-07:00">2020-09-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-09 02:14:57" itemprop="dateModified" datetime="2020-10-09T02:14:57-07:00">2020-10-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -435,18 +441,19 @@ Iris-versicolor    50
 Name: Species, dtype: int64</code></pre><h2 id="2-Data-Visualization"><a href="#2-Data-Visualization" class="headerlink" title="2. Data Visualization"></a>2. Data Visualization</h2><h3 id="2-1-Density-Plots"><a href="#2-1-Density-Plots" class="headerlink" title="2.1 Density Plots"></a>2.1 Density Plots</h3><p>To easily explore the distributions of numerical features, I use density plots combined with histograms to provide a sense. As the graph shows, length and width of sepal are nearly normal distributed, while those of petal are Search bimodal distributed. This difference may caused by sepices, so I will add speices as a lengend in the density plots to prove my hypothesis.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#density plots of features</span></span><br><span class="line">columns = iris_data.columns</span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">plt.suptitle(<span class="string">'Density Plot and Histogram of each feature'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">    feature = columns[i]</span><br><span class="line">    plt.subplot(<span class="number">2</span>,<span class="number">2</span>,i)</span><br><span class="line">    sns.distplot(iris_data[feature], kde=<span class="literal">True</span>, norm_hist=<span class="literal">True</span>, </span><br><span class="line">                 color = <span class="string">'darkblue'</span>, </span><br><span class="line">                 hist_kws=&#123;<span class="string">'edgecolor'</span>:<span class="string">'black'</span>&#125;,</span><br><span class="line">                 kde_kws=&#123;<span class="string">'linewidth'</span>: <span class="number">4</span>&#125;)</span><br><span class="line">    plt.title(<span class="string">'Density Plot and Histogram of &#123;&#125;'</span>.format(feature))</span><br><span class="line">    plt.ylabel(<span class="string">'Density'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
+<img src="/2020/09/15/Titanic_Project/output_12_0.png" class="" title="Density Plots">
 
-<p><img src="/Titanic_Project/output_12_0.png" alt="png"></p>
+
 <p>By looking at density plots with speices, I find Iris-setosa tends to have much smaller petals compared to the other two speices. Also, Iris-virginica is likely to have shorter but wider sepals. Comparing the other two speices, we can see that Iris-virginica’s petals are tend to be larger than Iris-versicolor’s. However, sepal width may not be able to help us distinguish these two speices, because of their similar distribution. </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#density plots of with speices</span></span><br><span class="line">species = iris_data[<span class="string">'Species'</span>].unique()</span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">9</span>))</span><br><span class="line">plt.suptitle(<span class="string">'Density Plot with Species'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">    feature = columns[i]</span><br><span class="line">    plt.subplot(<span class="number">2</span>,<span class="number">2</span>,i)</span><br><span class="line">    <span class="keyword">for</span> speice <span class="keyword">in</span> species:</span><br><span class="line">        subset = iris_data.loc[iris_data[<span class="string">'Species'</span>]==speice, feature]</span><br><span class="line">        sns.distplot(subset, kde=<span class="literal">True</span>, norm_hist=<span class="literal">True</span>, hist=<span class="literal">False</span>, </span><br><span class="line">                     kde_kws=&#123;<span class="string">'linewidth'</span>: <span class="number">4</span>&#125;, label=speice)</span><br><span class="line">    plt.legend(prop=&#123;<span class="string">'size'</span>: <span class="number">16</span>&#125;, title = <span class="string">'Speice'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'Density'</span>)</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="output_14_0.png" alt="png"></p>
+<p><img src="output_14_0.png" alt=""></p>
 <h3 id="2-2-Box-Plots"><a href="#2-2-Box-Plots" class="headerlink" title="2.2 Box Plots"></a>2.2 Box Plots</h3><p>Box plots are also useful to show distributions of variables. The following graph provides similar conclusion as I mentioned.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">16</span>,<span class="number">12</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># distribution of view counts of different categories</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">    feature = columns[i]</span><br><span class="line">    plt.subplot(<span class="number">2</span>,<span class="number">2</span>,i)</span><br><span class="line">    sns.boxplot(x=iris_data[<span class="string">'Species'</span>], y=iris_data[feature], palette=<span class="string">'Set2'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">''</span>)</span><br><span class="line">    plt.ylabel(<span class="string">''</span>)</span><br><span class="line">    plt.title(feature)</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="/Titanic_Project/output_17_0.png" alt="png"></p>
+<p><img src="output_17_0.png" alt="png"></p>
 <h3 id="2-2-Scatter-Plots"><a href="#2-2-Scatter-Plots" class="headerlink" title="2.2 Scatter Plots"></a>2.2 Scatter Plots</h3><p>To explore the relationships between these numerical variables, I use scatter plots. Here are my observations: </p>
 <ul>
 <li>For all speices, sepal length and sepal width are linear related. And petal length and petal width are linear related. </li>
@@ -455,12 +462,12 @@ Name: Species, dtype: int64</code></pre><h2 id="2-Data-Visualization"><a href="#
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># relationship between numerical features</span></span><br><span class="line">df = iris_data.drop([<span class="string">'Id'</span>], axis=<span class="number">1</span>)</span><br><span class="line">g = sns.PairGrid(df, hue=<span class="string">'Species'</span>, hue_kws=&#123;<span class="string">"marker"</span>:[<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'D'</span>]&#125;, palette=<span class="string">'Paired'</span>)</span><br><span class="line">g = g.map(plt.scatter, s=<span class="number">30</span>)</span><br><span class="line">g = g.add_legend();</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="/_posts/Titanic_Project/output_20_0.png" alt="png"></p>
+<p><img src="output_20_0.png" alt="png"></p>
 <h3 id="2-3-Heatmap"><a href="#2-3-Heatmap" class="headerlink" title="2.3 Heatmap"></a>2.3 Heatmap</h3><p>Correlation coefficients are used to measure the strength of the relationship between two variables. So I use a heatmap to visualize correlation coefficients.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#correlation coefficients matrix</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>,<span class="number">6</span>))</span><br><span class="line">plt.title(<span class="string">'Correlation Coefficients among numerical features'</span>)</span><br><span class="line">sns.heatmap(iris_data[[<span class="string">'SepalLengthCm'</span>, <span class="string">'SepalWidthCm'</span>, <span class="string">'PetalLengthCm'</span>, <span class="string">'PetalWidthCm'</span>]].corr(), annot=<span class="literal">True</span>, cmap=<span class="string">'Blues'</span>);</span><br></pre></td></tr></table></figure>
 
 
-<p><img src="/Users/zhengyaohong/hexo/source/_posts/Titanic_Project/output_23_0.png" alt="png"></p>
+<p><img src="output_23_0.png" alt="png"></p>
 
     </div>
 
