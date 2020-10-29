@@ -1,0 +1,2893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="This is an exploration of the Youtube Trending data to find the most valuable channels and provides investors with business recommendations.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Social Media Analysis on Youtube Trending">
+<meta property="og:url" content="http://yoursite.com/2020/10/28/Youtube_Project/index.html">
+<meta property="og:site_name" content="Yvette&#39;s Blog">
+<meta property="og:description" content="This is an exploration of the Youtube Trending data to find the most valuable channels and provides investors with business recommendations.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_26_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_28_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_31_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_33_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_37_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_40_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_41_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_42_0.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_54_1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_57_0.png">
+<meta property="article:published_time" content="2020-10-29T00:39:43.902Z">
+<meta property="article:modified_time" content="2020-10-29T00:42:04.500Z">
+<meta property="article:author" content="Yvette Zheng">
+<meta property="article:tag" content="Data Visualization">
+<meta property="article:tag" content="Exploratory Data Analysis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/10/28/Youtube_Project/output_26_1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/28/Youtube_Project/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Social Media Analysis on Youtube Trending | Yvette's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yvette's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/Youtube_Project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yvette Zheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yvette's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Social Media Analysis on Youtube Trending
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-10-28 17:39:43 / Modified: 17:42:04" itemprop="dateCreated datePublished" datetime="2020-10-28T17:39:43-07:00">2020-10-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Science-Projects/" itemprop="url" rel="index"><span itemprop="name">Data Science Projects</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>This is an exploration of the Youtube Trending data to find the most valuable channels and provides investors with business recommendations.</p>
+<a id="more"></a>
+<h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Introduction" data-toc-modified-id="Introduction-1">Introduction</a></span><ul class="toc-item"><li><span><a href="#1.Objective" data-toc-modified-id="1.Objective-1.1">1.Objective</a></span></li><li><span><a href="#2.-Data-description" data-toc-modified-id="2.-Data-description-1.2">2. Data description</a></span></li></ul></li><li><span><a href="#Data-Prepartion" data-toc-modified-id="Data-Prepartion-2">Data Prepartion</a></span></li><li><span><a href="#Explore-Data-Analysis" data-toc-modified-id="Explore-Data-Analysis-3">Explore Data Analysis</a></span><ul class="toc-item"><li><span><a href="#1.-Data-Processing" data-toc-modified-id="1.-Data-Processing-3.1">1. Data Processing</a></span></li><li><span><a href="#2.-Data-Visualization" data-toc-modified-id="2.-Data-Visualization-3.2">2. Data Visualization</a></span></li></ul></li><li><span><a href="#3.-Sentiment-Analysis" data-toc-modified-id="3.-Sentiment-Analysis-4">3. Sentiment Analysis</a></span></li><li><span><a href="#Project-Progress-Updated" data-toc-modified-id="Project-Progress-Updated-5">Project Progress Updated</a></span></li></ul></div>
+
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="1-Objective"><a href="#1-Objective" class="headerlink" title="1.Objective"></a>1.Objective</h2><p>YouTube nowadays is the largest video hosting website, and it has profound influences on US society in all aspects. Thus analyzing of youtube’s dataset become significant for companies to analyze the social trends and make a prediction for future strategic business plannings.   </p>
+<p>The overall objective is for investors and advertisers. We will provide business recommendations for them, like which channels have more business value, what people are concerning now, and how to target customers precisely and explore potential customers,etc.</p>
+<p>For the strategic decisions of investors, we will help them find the category that have relatively higher business potential. We drafted four judgment criterias, which are the number of videos in each category, the engagement rate (comment_count/view_count), the popularity rate (likes/view_count), and the average growth rate of showing up in trending, then there will be a weight value be assigned to those criterias.   </p>
+<p>For advertisers, we help them predict what elements will become popular,and four drafted judgment criterias include  the changing rate of the frequency a channel on the trending board. The goal is that advertiser can choose to sign contract with these channel to make profit. In addition, they can choose these channels/YouTubers to see if they match the characteristics of their products and find potential customers. For example, we find that ‘Billie Eilish’ goes on trending every day this month, so we look up this channel, and found that is the most potential and popular new star in the U.S, who contains very strong and unique personal style. This information will bring up a very clear target customer for some business, like clothing buyers who can recommend similar style colthes to these audience. </p>
+<h2 id="2-Data-description"><a href="#2-Data-description" class="headerlink" title="2. Data description"></a>2. Data description</h2><p>In order to get the data from youtube, we registered google developer account that we can have access to Google APIs. Then we used a script, which is downloaded from GitHub: <a href="https://github.com/DataSnaek/Trending-YouTube-Scraper" target="_blank" rel="noopener">https://github.com/DataSnaek/Trending-YouTube-Scraper</a>, to collect data. This youtube scraper can scrape the most trending video from different countries, however, we will mainly focus on the US trending videos based on the data we collected through March and April 2019. We are collecting the data day by day and each day the data file we saved contains 200 records. There are about 4000+ observations with 20+ CSV files so far. Our sample dataset has 15 columns, which include:</p>
+<p>Video_id: the unique identity of a video<br>Trending_date: the date that video is ranked<br>Title: the title of video of the video<br>Channel_title: the title of the channel which the video belongs to<br>Category_id:  the category of video, which can be looked up using the included JSON files<br>Publish_time: the time video was published<br>Tags: the tags a video contains<br>Views: the number of views each video have<br>Likes:  the number of like each video have<br>Dislikes: the number of dislikes each video have<br>Comment_count: the number of comment each video have<br>Thumbnail_link: the link connected to the cover page<br>Comments_disabled: if  people can leave comments or not<br>Ratings_disabled: if people can rate the video or not<br>Description: description of the video</p>
+<h1 id="Explore-Data-Analysis"><a href="#Explore-Data-Analysis" class="headerlink" title="Explore Data Analysis"></a>Explore Data Analysis</h1><h2 id="1-Data-Processing"><a href="#1-Data-Processing" class="headerlink" title="1. Data Processing"></a>1. Data Processing</h2><p>First of all, we check the dataset and NAs, and there are several rows with only ‘video_id ’ exist but other columns show as NAs, so we simply delete these rows. Then there are still some NAs existing in ‘Description’ but that will not affect later analysis so we keep it in our dataset. In addition, in the dataset, we need to use an extra category_dictionary.json file to index the real category of each video. Then there are two columns have datetime value but not format as datetime, so we convert it to datetime. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud</span><br><span class="line"><span class="keyword">import</span> nltk</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="comment"># nltk.download()</span></span><br><span class="line"><span class="keyword">from</span> nltk.sentiment <span class="keyword">import</span> SentimentIntensityAnalyzer</span><br><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"><span class="keyword">from</span> nltk <span class="keyword">import</span> sent_tokenize, word_tokenize</span><br><span class="line"><span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud, STOPWORDS</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="keyword">from</span> nltk.tokenize <span class="keyword">import</span> RegexpTokenizer</span><br><span class="line"><span class="keyword">import</span> re</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load data and view general information of dataset</span></span><br><span class="line">data=pd.read_csv(<span class="string">"/Users/zhengyaohong/Documents/study/SPRING 2019/758X-PYTHON/NewProject/Data.csv"</span>)</span><br><span class="line">data.info()</span><br><span class="line">data.head(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 10021 entries, 0 to 10020
+Data columns (total 16 columns):
+video_id             10021 non-null object
+title                10000 non-null object
+publishedAt          10000 non-null object
+channelId            10000 non-null object
+channelTitle         10000 non-null object
+categoryId           10000 non-null float64
+trending_date        10000 non-null object
+tags                 10000 non-null object
+view_count           10000 non-null float64
+likes                10000 non-null float64
+dislikes             10000 non-null float64
+comment_count        10000 non-null float64
+thumbnail_link       10000 non-null object
+comments_disabled    10000 non-null object
+ratings_disabled     10000 non-null object
+description          9965 non-null object
+dtypes: float64(5), object(11)
+memory usage: 1.2+ MB</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>title</th>
+      <th>publishedAt</th>
+      <th>channelId</th>
+      <th>channelTitle</th>
+      <th>categoryId</th>
+      <th>trending_date</th>
+      <th>tags</th>
+      <th>view_count</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>comment_count</th>
+      <th>thumbnail_link</th>
+      <th>comments_disabled</th>
+      <th>ratings_disabled</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>adzYW5DZoWs</td>
+      <td>Star Wars: The Rise of Skywalker – Teaser</td>
+      <td>2019-04-12T17:08:15.000Z</td>
+      <td>UCZGYJFUizSax-yElQaFDp5Q</td>
+      <td>Star Wars</td>
+      <td>24.0</td>
+      <td>19.14.04</td>
+      <td>Star Wars|Lucasfilm|Star Wars: Episode IX|JJ A...</td>
+      <td>17494243.0</td>
+      <td>429969.0</td>
+      <td>51877.0</td>
+      <td>71884.0</td>
+      <td>https://i.ytimg.com/vi/adzYW5DZoWs/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>Every generation has a legend. Watch the brand...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0GLbwkfhYZk</td>
+      <td>Star Wars Jedi: Fallen Order — Official Reveal...</td>
+      <td>2019-04-13T18:41:22.000Z</td>
+      <td>UCOsVSkmXD1tc6uiJ2hc0wYQ</td>
+      <td>EA Star Wars</td>
+      <td>20.0</td>
+      <td>19.14.04</td>
+      <td>Star Wars Jedi Fallen Order|Star Wars|Star War...</td>
+      <td>2125167.0</td>
+      <td>101509.0</td>
+      <td>3809.0</td>
+      <td>15366.0</td>
+      <td>https://i.ytimg.com/vi/0GLbwkfhYZk/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>Cal Kestis—one of the last surviving members o...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>QuderoyWqII</td>
+      <td>Magic Star ⭐ Concealer &amp; Setting Powder Reveal...</td>
+      <td>2019-04-12T19:00:59.000Z</td>
+      <td>UCkvK_5omS-42Ovgah8KRKtg</td>
+      <td>jeffreestar</td>
+      <td>26.0</td>
+      <td>19.14.04</td>
+      <td>jeffree star|jeffree star concealer|magic star...</td>
+      <td>5373596.0</td>
+      <td>289698.0</td>
+      <td>8386.0</td>
+      <td>36440.0</td>
+      <td>https://i.ytimg.com/vi/QuderoyWqII/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>The Magic Star™ Concealer &amp; Setting Powder lau...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>XsX3ATc3FbA</td>
+      <td>BTS (방탄소년단) '작은 것들을 위한 시 (Boy With Luv) feat. ...</td>
+      <td>2019-04-12T09:00:02.000Z</td>
+      <td>UC3IZKseVpdzPSBaWxBxundA</td>
+      <td>ibighit</td>
+      <td>10.0</td>
+      <td>19.14.04</td>
+      <td>BIGHIT|빅히트|방탄소년단|BTS|BANGTAN|방탄|작은 것들을 위한 시|Bo...</td>
+      <td>108445779.0</td>
+      <td>7597407.0</td>
+      <td>280945.0</td>
+      <td>2605772.0</td>
+      <td>https://i.ytimg.com/vi/XsX3ATc3FbA/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>BTS (방탄소년단) '작은 것들을 위한 시 (Boy With Luv) feat. ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-9txATEWXTQ</td>
+      <td>THE TRUTH... My Crush Does My Makeup</td>
+      <td>2019-04-12T19:10:06.000Z</td>
+      <td>UCucot-Zp428OwkyRm2I7v2Q</td>
+      <td>James Charles</td>
+      <td>24.0</td>
+      <td>19.14.04</td>
+      <td>james|james charles|makeup artist|mua|covergir...</td>
+      <td>5721920.0</td>
+      <td>361039.0</td>
+      <td>9842.0</td>
+      <td>32205.0</td>
+      <td>https://i.ytimg.com/vi/-9txATEWXTQ/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>HI SISTERS! In today's video, I wanted to fina...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>For videos whose view_count is recorded as 0, we found that all the videos required a Youtube premium account to view, so we can not access their views. For videos whose likes and dislikes are recorded as 0, we found that their channels disabled rating so that their likes can not be seen. For videos whose comment_count is recorded as 0, we found that their channels also disabled comment.</p>
+<p>As a result, we will exclude the 0 values in our following analysis on those variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Overview of nan values</span></span><br><span class="line">data.isna().sum()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>video_id              0
+title                21
+publishedAt          21
+channelId            21
+channelTitle         21
+categoryId           21
+trending_date        21
+tags                 21
+view_count           21
+likes                21
+dislikes             21
+comment_count        21
+thumbnail_link       21
+comments_disabled    21
+ratings_disabled     21
+description          24
+dtype: int64</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Drop all nan value in video identifers</span></span><br><span class="line">data = data[pd.notna(data[<span class="string">'title'</span>])]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Pair the category id with category title</span></span><br><span class="line">categories=&#123;&#125;</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'/Users/zhengyaohong/Documents/study/SPRING 2019/758X-PYTHON/NewProject/Trending-YouTube-Scraper-master/US_category_id.json'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    category = json.load(f)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> category[<span class="string">'items'</span>]:</span><br><span class="line">        categories[int(i[<span class="string">'id'</span>])]=i[<span class="string">'snippet'</span>][<span class="string">'title'</span>]</span><br><span class="line">        </span><br><span class="line">data[<span class="string">'category'</span>]=[categories[i] <span class="keyword">for</span> i <span class="keyword">in</span> data[<span class="string">'categoryId'</span>]]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reformat the date and time columns</span></span><br><span class="line">data[<span class="string">'publishedAt'</span>] = pd.to_datetime(data[<span class="string">'publishedAt'</span>], format=<span class="string">'%Y-%m-%dT%H:%M:%S'</span>)</span><br><span class="line">data[<span class="string">'trending_date'</span>]=pd.to_datetime(data[<span class="string">'trending_date'</span>],format=<span class="string">'%y.%d.%m'</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># General view of the four numeric attributes</span></span><br><span class="line">data[[<span class="string">'view_count'</span>,<span class="string">'likes'</span>,<span class="string">'dislikes'</span>,<span class="string">'comment_count'</span>]].describe()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>view_count</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>comment_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1.000000e+04</td>
+      <td>1.000000e+04</td>
+      <td>10000.000000</td>
+      <td>1.000000e+04</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.427541e+06</td>
+      <td>1.376545e+05</td>
+      <td>5037.541800</td>
+      <td>1.550961e+04</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>8.122748e+06</td>
+      <td>3.933908e+05</td>
+      <td>19400.530075</td>
+      <td>9.185268e+04</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>0.000000</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>6.605620e+05</td>
+      <td>1.689550e+04</td>
+      <td>441.000000</td>
+      <td>2.041750e+03</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.225098e+06</td>
+      <td>4.060200e+04</td>
+      <td>1012.000000</td>
+      <td>4.484000e+03</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2.905308e+06</td>
+      <td>1.149535e+05</td>
+      <td>2812.000000</td>
+      <td>1.085350e+04</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.954890e+08</td>
+      <td>9.079935e+06</td>
+      <td>446188.000000</td>
+      <td>3.121651e+06</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>There are some ‘0’s between these numeric variables, but in general thses cannot be 0, so we will check what happen to them.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.loc[(data[<span class="string">'view_count'</span>] ==<span class="number">0</span>) | (data[<span class="string">'likes'</span>] ==<span class="number">0</span>)|(data[<span class="string">'dislikes'</span>] ==<span class="number">0</span>)|(data[<span class="string">'comment_count'</span>] ==<span class="number">0</span>) ]</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>video_id</th>
+      <th>title</th>
+      <th>publishedAt</th>
+      <th>channelId</th>
+      <th>channelTitle</th>
+      <th>categoryId</th>
+      <th>trending_date</th>
+      <th>tags</th>
+      <th>view_count</th>
+      <th>likes</th>
+      <th>dislikes</th>
+      <th>comment_count</th>
+      <th>thumbnail_link</th>
+      <th>comments_disabled</th>
+      <th>ratings_disabled</th>
+      <th>description</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>181</th>
+      <td>cHs1ffWg8-E</td>
+      <td>pregnancy + hope | shawn johnson + andrew east</td>
+      <td>2019-04-04 14:00:14+00:00</td>
+      <td>UCJ15Zl-v8-ghTgEOTpxHdGw</td>
+      <td>Shawn Johnson East</td>
+      <td>22.0</td>
+      <td>2019-04-14</td>
+      <td>shawn johnson|shawn johnson official|andrew ea...</td>
+      <td>1031583.0</td>
+      <td>40024.0</td>
+      <td>439.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/cHs1ffWg8-E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Subscribe to follow our journey ▶ http://bit.l...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>CcCRs0Ic3FI</td>
+      <td>The Boy Band Con: The Lou Pearlman Story</td>
+      <td>2019-04-03 13:00:19+00:00</td>
+      <td>UCqVDpXKLmKeBU_yyt_QkItQ</td>
+      <td>YouTube Originals</td>
+      <td>1.0</td>
+      <td>2019-04-14</td>
+      <td>*NSync|Backstreet Boys|Justin Timberlake|Lance...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2620.0</td>
+      <td>https://i.ytimg.com/vi/CcCRs0Ic3FI/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The Boy Band Con: The Lou Pearlman Story is a ...</td>
+      <td>Film &amp; Animation</td>
+    </tr>
+    <tr>
+      <th>272</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-03-31</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>705756.0</td>
+      <td>27621.0</td>
+      <td>3001.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>334</th>
+      <td>DPvMPvUhc6E</td>
+      <td>TRYING ON MY MOMS WEDDING DRESS AND PROM DRESSES</td>
+      <td>2019-03-24 12:00:01+00:00</td>
+      <td>UCRPIJ_-fU0fycIi4a6PUXRg</td>
+      <td>The LeRoys</td>
+      <td>22.0</td>
+      <td>2019-03-31</td>
+      <td>THE LEROYS|the leyroys|kesley leroy|shanna ler...</td>
+      <td>657161.0</td>
+      <td>12895.0</td>
+      <td>550.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/DPvMPvUhc6E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>To shop mine and Kesley's outfits : https://th...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>378</th>
+      <td>ZV7MMQNVnEg</td>
+      <td>S2E2: Splits</td>
+      <td>2019-03-21 00:57:20+00:00</td>
+      <td>UCkM3cLfmWBSFoEU-xVnQ-dw</td>
+      <td>Step Up: High Water</td>
+      <td>24.0</td>
+      <td>2019-03-31</td>
+      <td>Step Up|Step Up: High Water|Naya Rivera|Ne-Yo|...</td>
+      <td>0.0</td>
+      <td>8443.0</td>
+      <td>549.0</td>
+      <td>790.0</td>
+      <td>https://i.ytimg.com/vi/ZV7MMQNVnEg/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>The budding rivalry between Tal and Zo comes t...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>402</th>
+      <td>KiYh4tpzPRQ</td>
+      <td>Coachella 2019 Curated LIVE</td>
+      <td>2019-03-28 05:05:51+00:00</td>
+      <td>UCHF66aWLOxBW4l6VkSrS3cQ</td>
+      <td>Coachella</td>
+      <td>10.0</td>
+      <td>2019-04-21</td>
+      <td>[none]</td>
+      <td>0.0</td>
+      <td>133117.0</td>
+      <td>26404.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/KiYh4tpzPRQ/default_liv...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>Coachella keeps the cameras rolling on Weekend...</td>
+      <td>Music</td>
+    </tr>
+    <tr>
+      <th>425</th>
+      <td>nriddSJoT5c</td>
+      <td>BTS(방탄소년단)-Dionysus [Music Bank COME BACK/2019...</td>
+      <td>2019-04-19 09:21:34+00:00</td>
+      <td>UC5BMQOsAB8hKUyHu9KI6yig</td>
+      <td>KBS World TV</td>
+      <td>24.0</td>
+      <td>2019-04-21</td>
+      <td>kbs|kbsworld|kbs world|kbs world tv|kbs drama|...</td>
+      <td>2713211.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>12085.0</td>
+      <td>https://i.ytimg.com/vi/nriddSJoT5c/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>▶Subscribe KBS World Official PagesYoutube Sub...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>480</th>
+      <td>GJplzhhvWvw</td>
+      <td>S8E2 Preview Trailer Breakdown! - Game of Thro...</td>
+      <td>2019-04-17 11:00:14+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-04-21</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>660271.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3701.0</td>
+      <td>https://i.ytimg.com/vi/GJplzhhvWvw/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for my Game of Thrones Season 8 E...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>534</th>
+      <td>b7eror7JG2Y</td>
+      <td>Comedian Kojo gets Simon's GOLDEN BUZZER | Aud...</td>
+      <td>2019-04-13 20:21:01+00:00</td>
+      <td>UCUtZaxDF3hD5VK4xRYFBePQ</td>
+      <td>Britain's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-04-21</td>
+      <td>britain's got talent|britains got talent|brita...</td>
+      <td>13081392.0</td>
+      <td>298217.0</td>
+      <td>12106.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/b7eror7JG2Y/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>See more from Britain's Got Talent at http://i...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>697</th>
+      <td>Es2lmv_wJnY</td>
+      <td>Devin Shares Her Sexual Assault Story • Ladylike</td>
+      <td>2019-04-28 15:00:02+00:00</td>
+      <td>UCcOeS5aEIadAhKtJ9_VKAIw</td>
+      <td>Ladylike</td>
+      <td>22.0</td>
+      <td>2019-05-03</td>
+      <td>buzzfeed|buzzfeed ladylike|ladylike|buzzfeed d...</td>
+      <td>1919818.0</td>
+      <td>174892.0</td>
+      <td>3060.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/Es2lmv_wJnY/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Please use the resources listed in the video a...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>716</th>
+      <td>M2D7JarYBmA</td>
+      <td>Ten-year-old Giorgia gets Alesha's GOLDEN BUZZ...</td>
+      <td>2019-04-27 20:13:59+00:00</td>
+      <td>UCUtZaxDF3hD5VK4xRYFBePQ</td>
+      <td>Britain's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-05-03</td>
+      <td>britain's got talent|britains got talent|brita...</td>
+      <td>5758423.0</td>
+      <td>107559.0</td>
+      <td>4069.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/M2D7JarYBmA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>See more from Britain's Got Talent at http://i...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>777</th>
+      <td>TgWKutWMT-o</td>
+      <td>Making My Own Starbucks Pinkity Drinkity</td>
+      <td>2019-04-23 19:00:26+00:00</td>
+      <td>UCucot-Zp428OwkyRm2I7v2Q</td>
+      <td>James Charles</td>
+      <td>24.0</td>
+      <td>2019-05-03</td>
+      <td>james|james charles|makeup artist|mua|covergir...</td>
+      <td>11683411.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>67107.0</td>
+      <td>https://i.ytimg.com/vi/TgWKutWMT-o/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>HI SISTERS! You all know that I am absolutely ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>945</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-04-04</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>838679.0</td>
+      <td>31572.0</td>
+      <td>3266.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>DPvMPvUhc6E</td>
+      <td>TRYING ON MY MOMS WEDDING DRESS AND PROM DRESSES</td>
+      <td>2019-03-24 12:00:01+00:00</td>
+      <td>UCRPIJ_-fU0fycIi4a6PUXRg</td>
+      <td>The LeRoys</td>
+      <td>22.0</td>
+      <td>2019-04-04</td>
+      <td>THE LEROYS|the leyroys|kesley leroy|shanna ler...</td>
+      <td>680115.0</td>
+      <td>13157.0</td>
+      <td>555.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/DPvMPvUhc6E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>To shop mine and Kesley's outfits : https://th...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>1088</th>
+      <td>EqFQMOkviYQ</td>
+      <td>S8E3 Preview: The Main Event! - Game of Throne...</td>
+      <td>2019-04-22 01:55:31+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-04-25</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>991396.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5224.0</td>
+      <td>https://i.ytimg.com/vi/EqFQMOkviYQ/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for my Game of Thrones Season 8 E...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>1115</th>
+      <td>_x6UM6I5jjA</td>
+      <td>INCREDIBLE Akshat Singh dances his way to Ant ...</td>
+      <td>2019-04-20 19:59:41+00:00</td>
+      <td>UCUtZaxDF3hD5VK4xRYFBePQ</td>
+      <td>Britain's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-04-25</td>
+      <td>britain's got talent|britains got talent|brita...</td>
+      <td>6054468.0</td>
+      <td>130006.0</td>
+      <td>9725.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/_x6UM6I5jjA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Akshat's motto is to be happy and make others ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>1142</th>
+      <td>nriddSJoT5c</td>
+      <td>BTS(방탄소년단)-Dionysus [Music Bank COME BACK/2019...</td>
+      <td>2019-04-19 09:21:34+00:00</td>
+      <td>UC5BMQOsAB8hKUyHu9KI6yig</td>
+      <td>KBS World TV</td>
+      <td>24.0</td>
+      <td>2019-04-25</td>
+      <td>kbs|kbsworld|kbs world|kbs world tv|kbs drama|...</td>
+      <td>2989419.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>12395.0</td>
+      <td>https://i.ytimg.com/vi/nriddSJoT5c/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>▶Subscribe KBS World Official PagesYoutube Sub...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>1293</th>
+      <td>fIikiid_WYQ</td>
+      <td>14 year old singer Iveta gets Michelle's Golde...</td>
+      <td>2019-03-16 20:10:00+00:00</td>
+      <td>UCIBHwinVPgVmIRiFJdX40fA</td>
+      <td>Ireland's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-03-21</td>
+      <td>Gottalentirl|Singing|Dancing|Got talent|Irelan...</td>
+      <td>2226583.0</td>
+      <td>27569.0</td>
+      <td>883.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/fIikiid_WYQ/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>14 year old singer Iveta wowed the crowd with ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>1331</th>
+      <td>-eUmis7uko0</td>
+      <td>Multiple fatalities in shooting at Christchurc...</td>
+      <td>2019-03-15 03:15:03+00:00</td>
+      <td>UCVgO39Bk5sMo66-6o6Spn6Q</td>
+      <td>ABC News (Australia)</td>
+      <td>25.0</td>
+      <td>2019-03-21</td>
+      <td>Christchurc|NZ|New Zealand|shooting|terrorist ...</td>
+      <td>1140483.0</td>
+      <td>4225.0</td>
+      <td>1053.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/-eUmis7uko0/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Multiple people are dead and one person is in ...</td>
+      <td>News &amp; Politics</td>
+    </tr>
+    <tr>
+      <th>1515</th>
+      <td>cHs1ffWg8-E</td>
+      <td>pregnancy + hope | shawn johnson + andrew east</td>
+      <td>2019-04-04 14:00:14+00:00</td>
+      <td>UCJ15Zl-v8-ghTgEOTpxHdGw</td>
+      <td>Shawn Johnson East</td>
+      <td>22.0</td>
+      <td>2019-04-10</td>
+      <td>shawn johnson|shawn johnson official|andrew ea...</td>
+      <td>992688.0</td>
+      <td>39289.0</td>
+      <td>434.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/cHs1ffWg8-E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Subscribe to follow our journey ▶ http://bit.l...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>1526</th>
+      <td>CcCRs0Ic3FI</td>
+      <td>The Boy Band Con: The Lou Pearlman Story</td>
+      <td>2019-04-03 13:00:19+00:00</td>
+      <td>UCqVDpXKLmKeBU_yyt_QkItQ</td>
+      <td>YouTube Originals</td>
+      <td>1.0</td>
+      <td>2019-04-10</td>
+      <td>*NSync|Backstreet Boys|Justin Timberlake|Lance...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2303.0</td>
+      <td>https://i.ytimg.com/vi/CcCRs0Ic3FI/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The Boy Band Con: The Lou Pearlman Story is a ...</td>
+      <td>Film &amp; Animation</td>
+    </tr>
+    <tr>
+      <th>1749</th>
+      <td>vsyDxvMMMYA</td>
+      <td>Official Season 8 Trailer Explained! - Game of...</td>
+      <td>2019-03-06 00:33:28+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-03-14</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>995140.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5610.0</td>
+      <td>https://i.ytimg.com/vi/vsyDxvMMMYA/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for the official Game of Thrones ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>1863</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-03-30</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>690601.0</td>
+      <td>27298.0</td>
+      <td>2962.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>1928</th>
+      <td>DPvMPvUhc6E</td>
+      <td>TRYING ON MY MOMS WEDDING DRESS AND PROM DRESSES</td>
+      <td>2019-03-24 12:00:01+00:00</td>
+      <td>UCRPIJ_-fU0fycIi4a6PUXRg</td>
+      <td>The LeRoys</td>
+      <td>22.0</td>
+      <td>2019-03-30</td>
+      <td>THE LEROYS|the leyroys|kesley leroy|shanna ler...</td>
+      <td>651474.0</td>
+      <td>12846.0</td>
+      <td>548.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/DPvMPvUhc6E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>To shop mine and Kesley's outfits : https://th...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>1972</th>
+      <td>ZV7MMQNVnEg</td>
+      <td>S2E2: Splits</td>
+      <td>2019-03-21 00:57:20+00:00</td>
+      <td>UCkM3cLfmWBSFoEU-xVnQ-dw</td>
+      <td>Step Up: High Water</td>
+      <td>24.0</td>
+      <td>2019-03-30</td>
+      <td>Step Up|Step Up: High Water|Naya Rivera|Ne-Yo|...</td>
+      <td>0.0</td>
+      <td>8369.0</td>
+      <td>544.0</td>
+      <td>788.0</td>
+      <td>https://i.ytimg.com/vi/ZV7MMQNVnEg/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>The budding rivalry between Tal and Zo comes t...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>b7eror7JG2Y</td>
+      <td>Comedian Kojo gets Simon's GOLDEN BUZZER | Aud...</td>
+      <td>2019-04-13 20:21:01+00:00</td>
+      <td>UCUtZaxDF3hD5VK4xRYFBePQ</td>
+      <td>Britain's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-04-15</td>
+      <td>britain's got talent|britains got talent|brita...</td>
+      <td>3995647.0</td>
+      <td>115324.0</td>
+      <td>3998.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/b7eror7JG2Y/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>See more from Britain's Got Talent at http://i...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>2291</th>
+      <td>vsyDxvMMMYA</td>
+      <td>Official Season 8 Trailer Explained! - Game of...</td>
+      <td>2019-03-06 00:33:28+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-03-11</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>953966.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5526.0</td>
+      <td>https://i.ytimg.com/vi/vsyDxvMMMYA/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for the official Game of Thrones ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>2350</th>
+      <td>3rx0m0Ft7Qg</td>
+      <td>Jordyn Woods Gives First Interview Since Cheat...</td>
+      <td>2019-03-01 20:32:26+00:00</td>
+      <td>UCjDsbbzHgTrGc4Ff26TJtsA</td>
+      <td>E! News</td>
+      <td>24.0</td>
+      <td>2019-03-11</td>
+      <td>Top Stories|Khloe Kardashian|Tristan Thompson|...</td>
+      <td>823173.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1657.0</td>
+      <td>https://i.ytimg.com/vi/3rx0m0Ft7Qg/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The model opens up on Red Table Talk and tells...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>2372</th>
+      <td>QpNmhz_g5hk</td>
+      <td>Hopsin - The Old Us</td>
+      <td>2019-02-27 21:13:42+00:00</td>
+      <td>UCvlJkDfgfG3J38pup6lvrPg</td>
+      <td>Hopsintv</td>
+      <td>10.0</td>
+      <td>2019-03-11</td>
+      <td>rap|hiphop|independent|rapper|hopsin|hopsintv|...</td>
+      <td>2495122.0</td>
+      <td>158546.0</td>
+      <td>2822.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/QpNmhz_g5hk/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Director: HopsinProducer: Moses IsraelProd. Co...</td>
+      <td>Music</td>
+    </tr>
+    <tr>
+      <th>2483</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-04-01</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>741632.0</td>
+      <td>28636.0</td>
+      <td>3066.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>7911</th>
+      <td>3rx0m0Ft7Qg</td>
+      <td>Jordyn Woods Gives First Interview Since Cheat...</td>
+      <td>2019-03-01 20:32:26+00:00</td>
+      <td>UCjDsbbzHgTrGc4Ff26TJtsA</td>
+      <td>E! News</td>
+      <td>24.0</td>
+      <td>2019-03-07</td>
+      <td>Top Stories|Khloe Kardashian|Tristan Thompson|...</td>
+      <td>819481.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1653.0</td>
+      <td>https://i.ytimg.com/vi/3rx0m0Ft7Qg/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The model opens up on Red Table Talk and tells...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>7941</th>
+      <td>QpNmhz_g5hk</td>
+      <td>Hopsin - The Old Us</td>
+      <td>2019-02-27 21:13:42+00:00</td>
+      <td>UCvlJkDfgfG3J38pup6lvrPg</td>
+      <td>Hopsintv</td>
+      <td>10.0</td>
+      <td>2019-03-07</td>
+      <td>rap|hiphop|independent|rapper|hopsin|hopsintv|...</td>
+      <td>1853291.0</td>
+      <td>135536.0</td>
+      <td>2357.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/QpNmhz_g5hk/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Director: HopsinProducer: Moses IsraelProd. Co...</td>
+      <td>Music</td>
+    </tr>
+    <tr>
+      <th>8135</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-04-03</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>806157.0</td>
+      <td>30644.0</td>
+      <td>3196.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>8182</th>
+      <td>DPvMPvUhc6E</td>
+      <td>TRYING ON MY MOMS WEDDING DRESS AND PROM DRESSES</td>
+      <td>2019-03-24 12:00:01+00:00</td>
+      <td>UCRPIJ_-fU0fycIi4a6PUXRg</td>
+      <td>The LeRoys</td>
+      <td>22.0</td>
+      <td>2019-04-03</td>
+      <td>THE LEROYS|the leyroys|kesley leroy|shanna ler...</td>
+      <td>677530.0</td>
+      <td>13127.0</td>
+      <td>554.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/DPvMPvUhc6E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>To shop mine and Kesley's outfits : https://th...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>8261</th>
+      <td>b7eror7JG2Y</td>
+      <td>Comedian Kojo gets Simon's GOLDEN BUZZER | Aud...</td>
+      <td>2019-04-13 20:21:01+00:00</td>
+      <td>UCUtZaxDF3hD5VK4xRYFBePQ</td>
+      <td>Britain's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-04-17</td>
+      <td>britain's got talent|britains got talent|brita...</td>
+      <td>10327361.0</td>
+      <td>254059.0</td>
+      <td>10001.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/b7eror7JG2Y/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>See more from Britain's Got Talent at http://i...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8406</th>
+      <td>Es2lmv_wJnY</td>
+      <td>Devin Shares Her Sexual Assault Story • Ladylike</td>
+      <td>2019-04-28 15:00:02+00:00</td>
+      <td>UCcOeS5aEIadAhKtJ9_VKAIw</td>
+      <td>Ladylike</td>
+      <td>22.0</td>
+      <td>2019-04-29</td>
+      <td>buzzfeed|buzzfeed ladylike|ladylike|buzzfeed d...</td>
+      <td>815016.0</td>
+      <td>102647.0</td>
+      <td>1199.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/Es2lmv_wJnY/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Please use the resources listed in the video a...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>8415</th>
+      <td>M2D7JarYBmA</td>
+      <td>Ten-year-old Giorgia gets Alesha's GOLDEN BUZZ...</td>
+      <td>2019-04-27 20:13:59+00:00</td>
+      <td>UCUtZaxDF3hD5VK4xRYFBePQ</td>
+      <td>Britain's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-04-29</td>
+      <td>britain's got talent|britains got talent|brita...</td>
+      <td>3500734.0</td>
+      <td>78342.0</td>
+      <td>2915.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/M2D7JarYBmA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>See more from Britain's Got Talent at http://i...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8496</th>
+      <td>TgWKutWMT-o</td>
+      <td>Making My Own Starbucks Pinkity Drinkity</td>
+      <td>2019-04-23 19:00:26+00:00</td>
+      <td>UCucot-Zp428OwkyRm2I7v2Q</td>
+      <td>James Charles</td>
+      <td>24.0</td>
+      <td>2019-04-29</td>
+      <td>james|james charles|makeup artist|mua|covergir...</td>
+      <td>11133229.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>63410.0</td>
+      <td>https://i.ytimg.com/vi/TgWKutWMT-o/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>HI SISTERS! You all know that I am absolutely ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8547</th>
+      <td>EqFQMOkviYQ</td>
+      <td>S8E3 Preview: The Main Event! - Game of Throne...</td>
+      <td>2019-04-22 01:55:31+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-04-29</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>1064483.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5370.0</td>
+      <td>https://i.ytimg.com/vi/EqFQMOkviYQ/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for my Game of Thrones Season 8 E...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8589</th>
+      <td>nriddSJoT5c</td>
+      <td>BTS(방탄소년단)-Dionysus [Music Bank COME BACK/2019...</td>
+      <td>2019-04-19 09:21:34+00:00</td>
+      <td>UC5BMQOsAB8hKUyHu9KI6yig</td>
+      <td>KBS World TV</td>
+      <td>24.0</td>
+      <td>2019-04-29</td>
+      <td>kbs|kbsworld|kbs world|kbs world tv|kbs drama|...</td>
+      <td>3132013.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>12508.0</td>
+      <td>https://i.ytimg.com/vi/nriddSJoT5c/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>▶Subscribe KBS World Official PagesYoutube Sub...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8739</th>
+      <td>vsyDxvMMMYA</td>
+      <td>Official Season 8 Trailer Explained! - Game of...</td>
+      <td>2019-03-06 00:33:28+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-03-13</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>980209.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5571.0</td>
+      <td>https://i.ytimg.com/vi/vsyDxvMMMYA/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for the official Game of Thrones ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8790</th>
+      <td>3rx0m0Ft7Qg</td>
+      <td>Jordyn Woods Gives First Interview Since Cheat...</td>
+      <td>2019-03-01 20:32:26+00:00</td>
+      <td>UCjDsbbzHgTrGc4Ff26TJtsA</td>
+      <td>E! News</td>
+      <td>24.0</td>
+      <td>2019-03-13</td>
+      <td>Top Stories|Khloe Kardashian|Tristan Thompson|...</td>
+      <td>823627.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1655.0</td>
+      <td>https://i.ytimg.com/vi/3rx0m0Ft7Qg/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The model opens up on Red Table Talk and tells...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>8807</th>
+      <td>QpNmhz_g5hk</td>
+      <td>Hopsin - The Old Us</td>
+      <td>2019-02-27 21:13:42+00:00</td>
+      <td>UCvlJkDfgfG3J38pup6lvrPg</td>
+      <td>Hopsintv</td>
+      <td>10.0</td>
+      <td>2019-03-13</td>
+      <td>rap|hiphop|independent|rapper|hopsin|hopsintv|...</td>
+      <td>2717940.0</td>
+      <td>163902.0</td>
+      <td>2942.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/QpNmhz_g5hk/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Director: HopsinProducer: Moses IsraelProd. Co...</td>
+      <td>Music</td>
+    </tr>
+    <tr>
+      <th>8894</th>
+      <td>cHs1ffWg8-E</td>
+      <td>pregnancy + hope | shawn johnson + andrew east</td>
+      <td>2019-04-04 14:00:14+00:00</td>
+      <td>UCJ15Zl-v8-ghTgEOTpxHdGw</td>
+      <td>Shawn Johnson East</td>
+      <td>22.0</td>
+      <td>2019-04-08</td>
+      <td>shawn johnson|shawn johnson official|andrew ea...</td>
+      <td>954169.0</td>
+      <td>38333.0</td>
+      <td>423.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/cHs1ffWg8-E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Subscribe to follow our journey ▶ http://bit.l...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>8904</th>
+      <td>CcCRs0Ic3FI</td>
+      <td>The Boy Band Con: The Lou Pearlman Story</td>
+      <td>2019-04-03 13:00:19+00:00</td>
+      <td>UCqVDpXKLmKeBU_yyt_QkItQ</td>
+      <td>YouTube Originals</td>
+      <td>1.0</td>
+      <td>2019-04-08</td>
+      <td>*NSync|Backstreet Boys|Justin Timberlake|Lance...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2091.0</td>
+      <td>https://i.ytimg.com/vi/CcCRs0Ic3FI/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The Boy Band Con: The Lou Pearlman Story is a ...</td>
+      <td>Film &amp; Animation</td>
+    </tr>
+    <tr>
+      <th>9073</th>
+      <td>vsyDxvMMMYA</td>
+      <td>Official Season 8 Trailer Explained! - Game of...</td>
+      <td>2019-03-06 00:33:28+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-03-08</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>832493.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5300.0</td>
+      <td>https://i.ytimg.com/vi/vsyDxvMMMYA/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for the official Game of Thrones ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9143</th>
+      <td>3rx0m0Ft7Qg</td>
+      <td>Jordyn Woods Gives First Interview Since Cheat...</td>
+      <td>2019-03-01 20:32:26+00:00</td>
+      <td>UCjDsbbzHgTrGc4Ff26TJtsA</td>
+      <td>E! News</td>
+      <td>24.0</td>
+      <td>2019-03-08</td>
+      <td>Top Stories|Khloe Kardashian|Tristan Thompson|...</td>
+      <td>821807.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1653.0</td>
+      <td>https://i.ytimg.com/vi/3rx0m0Ft7Qg/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The model opens up on Red Table Talk and tells...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9170</th>
+      <td>QpNmhz_g5hk</td>
+      <td>Hopsin - The Old Us</td>
+      <td>2019-02-27 21:13:42+00:00</td>
+      <td>UCvlJkDfgfG3J38pup6lvrPg</td>
+      <td>Hopsintv</td>
+      <td>10.0</td>
+      <td>2019-03-08</td>
+      <td>rap|hiphop|independent|rapper|hopsin|hopsintv|...</td>
+      <td>2090298.0</td>
+      <td>145988.0</td>
+      <td>2554.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/QpNmhz_g5hk/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Director: HopsinProducer: Moses IsraelProd. Co...</td>
+      <td>Music</td>
+    </tr>
+    <tr>
+      <th>9255</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-03-29</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>566465.0</td>
+      <td>25222.0</td>
+      <td>2367.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>9333</th>
+      <td>DPvMPvUhc6E</td>
+      <td>TRYING ON MY MOMS WEDDING DRESS AND PROM DRESSES</td>
+      <td>2019-03-24 12:00:01+00:00</td>
+      <td>UCRPIJ_-fU0fycIi4a6PUXRg</td>
+      <td>The LeRoys</td>
+      <td>22.0</td>
+      <td>2019-03-29</td>
+      <td>THE LEROYS|the leyroys|kesley leroy|shanna ler...</td>
+      <td>632035.0</td>
+      <td>12608.0</td>
+      <td>541.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/DPvMPvUhc6E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>To shop mine and Kesley's outfits : https://th...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>9380</th>
+      <td>ZV7MMQNVnEg</td>
+      <td>S2E2: Splits</td>
+      <td>2019-03-21 00:57:20+00:00</td>
+      <td>UCkM3cLfmWBSFoEU-xVnQ-dw</td>
+      <td>Step Up: High Water</td>
+      <td>24.0</td>
+      <td>2019-03-29</td>
+      <td>Step Up|Step Up: High Water|Naya Rivera|Ne-Yo|...</td>
+      <td>0.0</td>
+      <td>8079.0</td>
+      <td>509.0</td>
+      <td>759.0</td>
+      <td>https://i.ytimg.com/vi/ZV7MMQNVnEg/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>The budding rivalry between Tal and Zo comes t...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9435</th>
+      <td>fIikiid_WYQ</td>
+      <td>14 year old singer Iveta gets Michelle's Golde...</td>
+      <td>2019-03-16 20:10:00+00:00</td>
+      <td>UCIBHwinVPgVmIRiFJdX40fA</td>
+      <td>Ireland's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-03-17</td>
+      <td>Gottalentirl|Singing|Dancing|Got talent|Irelan...</td>
+      <td>691253.0</td>
+      <td>13148.0</td>
+      <td>291.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/fIikiid_WYQ/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>14 year old singer Iveta wowed the crowd with ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9469</th>
+      <td>-eUmis7uko0</td>
+      <td>Multiple fatalities in shooting at Christchurc...</td>
+      <td>2019-03-15 03:15:03+00:00</td>
+      <td>UCVgO39Bk5sMo66-6o6Spn6Q</td>
+      <td>ABC News (Australia)</td>
+      <td>25.0</td>
+      <td>2019-03-17</td>
+      <td>Christchurc|NZ|New Zealand|shooting|terrorist ...</td>
+      <td>1086437.0</td>
+      <td>4086.0</td>
+      <td>1009.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/-eUmis7uko0/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Multiple people are dead and one person is in ...</td>
+      <td>News &amp; Politics</td>
+    </tr>
+    <tr>
+      <th>9601</th>
+      <td>vsyDxvMMMYA</td>
+      <td>Official Season 8 Trailer Explained! - Game of...</td>
+      <td>2019-03-06 00:33:28+00:00</td>
+      <td>UC-x4iL-dib6tLIfSD4orfQw</td>
+      <td>Talking Thrones</td>
+      <td>24.0</td>
+      <td>2019-03-17</td>
+      <td>Game of Thrones Season 8|Game of Thrones Seaso...</td>
+      <td>1005501.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5644.0</td>
+      <td>https://i.ytimg.com/vi/vsyDxvMMMYA/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>Welcome back for the official Game of Thrones ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9676</th>
+      <td>cHs1ffWg8-E</td>
+      <td>pregnancy + hope | shawn johnson + andrew east</td>
+      <td>2019-04-04 14:00:14+00:00</td>
+      <td>UCJ15Zl-v8-ghTgEOTpxHdGw</td>
+      <td>Shawn Johnson East</td>
+      <td>22.0</td>
+      <td>2019-04-07</td>
+      <td>shawn johnson|shawn johnson official|andrew ea...</td>
+      <td>935007.0</td>
+      <td>37852.0</td>
+      <td>421.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/cHs1ffWg8-E/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Subscribe to follow our journey ▶ http://bit.l...</td>
+      <td>People &amp; Blogs</td>
+    </tr>
+    <tr>
+      <th>9685</th>
+      <td>CcCRs0Ic3FI</td>
+      <td>The Boy Band Con: The Lou Pearlman Story</td>
+      <td>2019-04-03 13:00:19+00:00</td>
+      <td>UCqVDpXKLmKeBU_yyt_QkItQ</td>
+      <td>YouTube Originals</td>
+      <td>1.0</td>
+      <td>2019-04-07</td>
+      <td>*NSync|Backstreet Boys|Justin Timberlake|Lance...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2001.0</td>
+      <td>https://i.ytimg.com/vi/CcCRs0Ic3FI/default.jpg</td>
+      <td>False</td>
+      <td>True</td>
+      <td>The Boy Band Con: The Lou Pearlman Story is a ...</td>
+      <td>Film &amp; Animation</td>
+    </tr>
+    <tr>
+      <th>9810</th>
+      <td>JLE228ZuGGA</td>
+      <td>Apple Card Design</td>
+      <td>2019-03-27 22:14:00+00:00</td>
+      <td>UCE_M8A5yxnLfW0KghEeajjw</td>
+      <td>Apple</td>
+      <td>28.0</td>
+      <td>2019-04-07</td>
+      <td>Apple|iphone|apple card|credit card|applecard|...</td>
+      <td>912711.0</td>
+      <td>33467.0</td>
+      <td>3408.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/JLE228ZuGGA/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>This is Apple Card. Titanium, laser-etched, no...</td>
+      <td>Science &amp; Technology</td>
+    </tr>
+    <tr>
+      <th>9862</th>
+      <td>ZV7MMQNVnEg</td>
+      <td>S2E2: Splits</td>
+      <td>2019-03-21 00:57:20+00:00</td>
+      <td>UCkM3cLfmWBSFoEU-xVnQ-dw</td>
+      <td>Step Up: High Water</td>
+      <td>24.0</td>
+      <td>2019-03-22</td>
+      <td>Step Up|Step Up: High Water|Naya Rivera|Ne-Yo|...</td>
+      <td>0.0</td>
+      <td>3652.0</td>
+      <td>190.0</td>
+      <td>384.0</td>
+      <td>https://i.ytimg.com/vi/ZV7MMQNVnEg/default.jpg</td>
+      <td>False</td>
+      <td>False</td>
+      <td>The budding rivalry between Tal and Zo comes t...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9959</th>
+      <td>fIikiid_WYQ</td>
+      <td>14 year old singer Iveta gets Michelle's Golde...</td>
+      <td>2019-03-16 20:10:00+00:00</td>
+      <td>UCIBHwinVPgVmIRiFJdX40fA</td>
+      <td>Ireland's Got Talent</td>
+      <td>24.0</td>
+      <td>2019-03-22</td>
+      <td>Gottalentirl|Singing|Dancing|Got talent|Irelan...</td>
+      <td>2504293.0</td>
+      <td>31030.0</td>
+      <td>982.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/fIikiid_WYQ/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>14 year old singer Iveta wowed the crowd with ...</td>
+      <td>Entertainment</td>
+    </tr>
+    <tr>
+      <th>9993</th>
+      <td>-eUmis7uko0</td>
+      <td>Multiple fatalities in shooting at Christchurc...</td>
+      <td>2019-03-15 03:15:03+00:00</td>
+      <td>UCVgO39Bk5sMo66-6o6Spn6Q</td>
+      <td>ABC News (Australia)</td>
+      <td>25.0</td>
+      <td>2019-03-22</td>
+      <td>Christchurc|NZ|New Zealand|shooting|terrorist ...</td>
+      <td>1138120.0</td>
+      <td>4235.0</td>
+      <td>1057.0</td>
+      <td>0.0</td>
+      <td>https://i.ytimg.com/vi/-eUmis7uko0/default.jpg</td>
+      <td>True</td>
+      <td>False</td>
+      <td>Multiple people are dead and one person is in ...</td>
+      <td>News &amp; Politics</td>
+    </tr>
+  </tbody>
+</table>
+<p>135 rows × 17 columns</p>
+</div>
+
+
+
+<h2 id="2-Data-Visualization"><a href="#2-Data-Visualization" class="headerlink" title="2. Data Visualization"></a>2. Data Visualization</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Vlsualize the correlation between view_count, likes,dislikes, and comment_count</span></span><br><span class="line">correlation=data[[<span class="string">'view_count'</span>,<span class="string">'likes'</span>,<span class="string">'dislikes'</span>,<span class="string">'comment_count'</span>]].corr()</span><br><span class="line">sns.heatmap(correlation,cmap=<span class="string">'Blues'</span>,annot=<span class="literal">True</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="output_26_1.png" alt="png"></p>
+<p>By simply plot the heatmap we can see the correlations between view_count, likes, dislikes, and comment_count. So it seems that increase in like contribute the most in increase comment_count. View_count and comment_count don’t have that strong correlation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the number of video by category</span></span><br><span class="line">plt.figure(figsize = (<span class="number">25</span>,<span class="number">9</span>))</span><br><span class="line">sns.countplot(data[<span class="string">'category'</span>],order = data[<span class="string">'category'</span>].value_counts().index);</span><br></pre></td></tr></table></figure>
+
+<p><img src="output_28_1.png" alt="png"></p>
+<p>Entertainment has the most video show up in the trending video, which is more than twice the second. This only can present that the majority group of videos are belong to entertainment, and the competition under entertainment channels may be very fierce. Then we would like to see the distribution of ‘view_count’, ‘likes’, ‘dislikes’, ‘comment_count’ by different categories.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the distribution of 'view_count','likes','dislikes','comment_count'</span></span><br><span class="line">view_count=np.log(data[<span class="string">'view_count'</span>]+<span class="number">1</span> )</span><br><span class="line">likes=np.log(data[<span class="string">'likes'</span>]+<span class="number">1</span>)</span><br><span class="line">dislikes=np.log(data[<span class="string">'dislikes'</span>]+<span class="number">1</span>)</span><br><span class="line">comment=np.log(data[<span class="string">'comment_count'</span>]+<span class="number">1</span>)</span><br><span class="line">data_count=pd.concat([view_count,likes,dislikes,comment], axis=<span class="number">1</span>)</span><br><span class="line">data_count.index=data[<span class="string">'category'</span>]</span><br><span class="line">data_count=data_count[(data_count != <span class="number">0</span>)]</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">32</span>,<span class="number">25</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># distribution of view counts of different categories</span></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">sns.boxplot(data_count.index,<span class="string">'view_count'</span>, data=data_count,order = data[<span class="string">'category'</span>].value_counts().index)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>,fontsize=<span class="number">12</span>)</span><br><span class="line">plt.xlabel(<span class="string">''</span>)</span><br><span class="line">plt.ylabel(<span class="string">''</span>)</span><br><span class="line">plt.title(<span class="string">"View Count"</span>, fontsize=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># distribution of likes of different categories</span></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">sns.boxplot(data_count.index,<span class="string">'likes'</span>, data=data_count,order = data[<span class="string">'category'</span>].value_counts().index)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>,fontsize=<span class="number">12</span>)</span><br><span class="line">plt.xlabel(<span class="string">''</span>)</span><br><span class="line">plt.ylabel(<span class="string">''</span>)</span><br><span class="line">plt.title(<span class="string">"Likes"</span>, fontsize=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># distribution of dislikes of different categories</span></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">sns.boxplot(data_count.index,<span class="string">'dislikes'</span>, data=data_count,order = data[<span class="string">'category'</span>].value_counts().index)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>,fontsize=<span class="number">12</span>)</span><br><span class="line">plt.xlabel(<span class="string">''</span>)</span><br><span class="line">plt.ylabel(<span class="string">''</span>)</span><br><span class="line">plt.title(<span class="string">"Dislikes"</span>, fontsize=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># distribution of comment counts of different categories</span></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>)</span><br><span class="line">sns.boxplot(data_count.index,<span class="string">'comment_count'</span>, data=data_count,order = data[<span class="string">'category'</span>].value_counts().index)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>,fontsize=<span class="number">12</span>)</span><br><span class="line">plt.xlabel(<span class="string">''</span>)</span><br><span class="line">plt.ylabel(<span class="string">''</span>)</span><br><span class="line">plt.title(<span class="string">"Comment Count"</span>, fontsize=<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_31_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">general_view=pd.DataFrame(data[[<span class="string">'view_count'</span>,<span class="string">'likes'</span>,<span class="string">'dislikes'</span>,<span class="string">'comment_count'</span>]].groupby(data[<span class="string">'category'</span>]).mean())</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The average of four numeric attributes </span></span><br><span class="line">plt.figure(figsize=(<span class="number">32</span>,<span class="number">20</span>))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">plt.plot( general_view.index,<span class="string">'view_count'</span> , data=general_view, color=<span class="string">'skyblue'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.title(<span class="string">'View Count vs Category'</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">plt.plot( general_view.index, <span class="string">'likes'</span>, data=general_view, color=<span class="string">'olive'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.title(<span class="string">'Likes vs Category'</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">plt.plot( general_view.index, <span class="string">'dislikes'</span>, data=general_view, color=<span class="string">'black'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.title(<span class="string">'Dislikes vs Category'</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>)</span><br><span class="line">plt.plot( general_view.index, <span class="string">'comment_count'</span>, data=general_view, color=<span class="string">'red'</span>, linewidth=<span class="number">2</span>, linestyle=<span class="string">'dashed'</span>)</span><br><span class="line">plt.title(<span class="string">'Comment Count vs Category'</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.xticks(rotation=<span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_33_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create evaluation matrix by mean of time interval, number of videos, average view count, standard deviation of view count</span></span><br><span class="line">Matrix1 = data.pivot_table(index=<span class="string">"category"</span>, values=[<span class="string">"view_count"</span>, <span class="string">"interval"</span>], aggfunc=&#123;<span class="string">"interval"</span>: np.mean, <span class="string">"view_count"</span>:[<span class="string">"count"</span>, np.std, np.mean]&#125;)</span><br><span class="line">Matrix1.columns = [<span class="string">"interval_mean"</span>, <span class="string">"video_count"</span>, <span class="string">"view_mean"</span>, <span class="string">"view_std"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate socres for each character by descending the rank</span></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> Matrix1.columns:</span><br><span class="line">    Matrix1[<span class="string">"&#123;&#125;_rank"</span>.format(col)] = Matrix1[col].rank(ascending=<span class="number">1</span>)</span><br><span class="line">Matrix1[<span class="string">"interval_mean_rank"</span>] = <span class="number">15</span>-Matrix1[<span class="string">"interval_mean_rank"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate total score</span></span><br><span class="line">Matrix1[<span class="string">"score"</span>] = Matrix1.iloc[:,<span class="number">-4</span>:].sum(axis=<span class="number">1</span>)</span><br><span class="line">Matrix1.sort_values(by=<span class="string">"score"</span>, inplace=<span class="literal">True</span>, ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Matrix1</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>interval_mean</th>
+      <th>video_count</th>
+      <th>view_mean</th>
+      <th>view_std</th>
+      <th>interval_mean_rank</th>
+      <th>video_count_rank</th>
+      <th>view_mean_rank</th>
+      <th>view_std_rank</th>
+      <th>score</th>
+    </tr>
+    <tr>
+      <th>category</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Entertainment</th>
+      <td>5.194910</td>
+      <td>2986</td>
+      <td>3.182532e+06</td>
+      <td>5.867944e+06</td>
+      <td>10.0</td>
+      <td>14.0</td>
+      <td>12.0</td>
+      <td>12.0</td>
+      <td>48.0</td>
+    </tr>
+    <tr>
+      <th>Music</th>
+      <td>6.103473</td>
+      <td>1382</td>
+      <td>9.802081e+06</td>
+      <td>1.743290e+07</td>
+      <td>1.0</td>
+      <td>13.0</td>
+      <td>14.0</td>
+      <td>14.0</td>
+      <td>42.0</td>
+    </tr>
+    <tr>
+      <th>Sports</th>
+      <td>4.680284</td>
+      <td>1126</td>
+      <td>1.479559e+06</td>
+      <td>2.928777e+06</td>
+      <td>14.0</td>
+      <td>12.0</td>
+      <td>7.0</td>
+      <td>9.0</td>
+      <td>42.0</td>
+    </tr>
+    <tr>
+      <th>Film &amp; Animation</th>
+      <td>5.620229</td>
+      <td>524</td>
+      <td>4.703035e+06</td>
+      <td>8.137935e+06</td>
+      <td>4.0</td>
+      <td>8.0</td>
+      <td>13.0</td>
+      <td>13.0</td>
+      <td>38.0</td>
+    </tr>
+    <tr>
+      <th>Howto &amp; Style</th>
+      <td>5.235650</td>
+      <td>662</td>
+      <td>1.607683e+06</td>
+      <td>1.951892e+06</td>
+      <td>9.0</td>
+      <td>10.0</td>
+      <td>8.0</td>
+      <td>7.0</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <th>Comedy</th>
+      <td>5.546512</td>
+      <td>860</td>
+      <td>2.144218e+06</td>
+      <td>2.302716e+06</td>
+      <td>5.0</td>
+      <td>11.0</td>
+      <td>9.0</td>
+      <td>8.0</td>
+      <td>33.0</td>
+    </tr>
+    <tr>
+      <th>People &amp; Blogs</th>
+      <td>5.794545</td>
+      <td>550</td>
+      <td>2.538667e+06</td>
+      <td>3.283287e+06</td>
+      <td>3.0</td>
+      <td>9.0</td>
+      <td>10.0</td>
+      <td>10.0</td>
+      <td>32.0</td>
+    </tr>
+    <tr>
+      <th>Science &amp; Technology</th>
+      <td>4.698073</td>
+      <td>467</td>
+      <td>1.475655e+06</td>
+      <td>1.508118e+06</td>
+      <td>13.0</td>
+      <td>7.0</td>
+      <td>6.0</td>
+      <td>5.0</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <th>Gaming</th>
+      <td>5.813149</td>
+      <td>289</td>
+      <td>2.728532e+06</td>
+      <td>3.520317e+06</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>11.0</td>
+      <td>11.0</td>
+      <td>27.0</td>
+    </tr>
+    <tr>
+      <th>News &amp; Politics</th>
+      <td>4.995086</td>
+      <td>407</td>
+      <td>1.233553e+06</td>
+      <td>1.385904e+06</td>
+      <td>11.0</td>
+      <td>6.0</td>
+      <td>4.0</td>
+      <td>4.0</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>Education</th>
+      <td>5.451923</td>
+      <td>312</td>
+      <td>1.458778e+06</td>
+      <td>1.703183e+06</td>
+      <td>7.0</td>
+      <td>5.0</td>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>23.0</td>
+    </tr>
+    <tr>
+      <th>Pets &amp; Animals</th>
+      <td>4.913043</td>
+      <td>23</td>
+      <td>6.665884e+05</td>
+      <td>2.772972e+05</td>
+      <td>12.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>Autos &amp; Vehicles</th>
+      <td>5.538983</td>
+      <td>295</td>
+      <td>8.257867e+05</td>
+      <td>5.692492e+05</td>
+      <td>6.0</td>
+      <td>4.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>Travel &amp; Events</th>
+      <td>5.333333</td>
+      <td>117</td>
+      <td>8.301829e+05</td>
+      <td>2.534363e+05</td>
+      <td>8.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>14.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize = (<span class="number">15</span>,<span class="number">15</span>))</span><br><span class="line">plt.scatter(x=Matrix1[<span class="string">'video_count_rank'</span>], y=Matrix1[<span class="string">'interval_mean_rank'</span>], s=Matrix1[<span class="string">'view_mean_rank'</span>]*<span class="number">400</span>, c=Matrix1[<span class="string">'view_std_rank'</span>], cmap=<span class="string">"Blues"</span>, alpha=<span class="number">0.4</span>, edgecolors=<span class="string">"grey"</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.xlabel(<span class="string">"video count score"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"interval mean score"</span>)</span><br><span class="line">plt.title(<span class="string">'Categoty Score Demostration'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(Matrix1)):</span><br><span class="line">    plt.annotate(s=Matrix1.index[i], xy=(Matrix1[<span class="string">'video_count_rank'</span>][i], Matrix1[<span class="string">'interval_mean_rank'</span>][i]));</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_37_0.png" alt="png"></p>
+<p>By looking at the distribution of each attribute, we developed some insights:<br>some categories have obviously high variance, such as music, entertainments, film&amp;Animation, etc. This present the variety of videos in these categories, which polarization is very serious. Oppositely, some categories have very condensed distribution, like travel, Pets &amp; Animals, auto &amp;vehicles. This may because these categories have smaller but more stable audience Sports got in the top three show up frequency on the last graph, but all four distributions are lower than others.<br>Pet also have the lowest view and number of video, but it shows more interactive between the audiences.<br>Comparing to the count view by category, which Entertainment has the highest value, Music becomes the top category on all four attributes based on the distributions, so this show that Entertainment may not be the most popular category, only because it has the largest video base so it can have so many videos go up on trending, but music gets the most attention from people. Since music is a very personal thing, so it shows a high ratio between likes and dislikes.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#the distribution of days that videos take to become popular</span></span><br><span class="line">data[<span class="string">'publish_date'</span>] = data[<span class="string">'publishedAt'</span>].dt.date</span><br><span class="line">data[<span class="string">'publish_time'</span>] = data[<span class="string">'publishedAt'</span>].dt.time</span><br><span class="line">data[<span class="string">'interval'</span>] = (data[<span class="string">'trending_date'</span>].dt.date-data[<span class="string">'publish_date'</span>]).astype(<span class="string">'timedelta64[D]'</span>)</span><br><span class="line"><span class="comment">#Overview of distribution of interval</span></span><br><span class="line">data.interval.describe()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>count    10000.000000
+mean         5.356400
+std          3.256354
+min          0.000000
+25%          3.000000
+50%          5.000000
+75%          8.000000
+max         24.000000
+Name: interval, dtype: float64</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Histgram of distribution of interval</span></span><br><span class="line">plt.figure(figsize = (<span class="number">25</span>,<span class="number">9</span>))</span><br><span class="line">sns.countplot(data[<span class="string">'interval'</span>])</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_40_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Histgram of distribution of interval</span></span><br><span class="line">plt.figure(figsize = (<span class="number">25</span>,<span class="number">9</span>))</span><br><span class="line">sns.countplot(data[data.category==<span class="string">"Entertainment"</span>][<span class="string">'interval'</span>])</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_41_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Average time interval between published and trending</span></span><br><span class="line">df_t = pd.DataFrame(data[<span class="string">'interval'</span>].groupby(data[<span class="string">'category'</span>]).mean()).sort_values(by=<span class="string">"interval"</span>)</span><br><span class="line">plt.figure(figsize = (<span class="number">25</span>,<span class="number">9</span>))</span><br><span class="line">plt.plot(df_t)</span><br><span class="line">plt.title(<span class="string">"Average Days to be trending video"</span>, fontsize=<span class="number">20</span>)</span><br><span class="line">plt.show();</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_42_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize = (<span class="number">25</span>,<span class="number">9</span>))</span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>)</span><br><span class="line">sns.countplot(data[dat][<span class="string">'interval'</span>])</span><br></pre></td></tr></table></figure>
+
+<p>The distribution of intervals between video’s publishing time and trending time shows that frequncy of interval incease to more than 500 when interval is 2days, and then decrease. We also found that if a video is older than half a month, generally, it can not appear on trending board.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##Top videoes whoes view_count/likes grow fatest among categories</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#calculate growth rate for each video</span></span><br><span class="line">data[<span class="string">'growth_rate_view'</span>] = data[<span class="string">'view_count'</span>]/(data[<span class="string">'interval'</span>]+<span class="number">1</span>)</span><br><span class="line">data[<span class="string">'growth_rate_like'</span>] = data[<span class="string">'likes'</span>]/(data[<span class="string">'interval'</span>]+<span class="number">1</span>)</span><br><span class="line">data[<span class="string">'growth_rate_dislike'</span>] = data[<span class="string">'dislikes'</span>]/(data[<span class="string">'interval'</span>]+<span class="number">1</span>)</span><br><span class="line">data[<span class="string">'growth_rate_comment'</span>] = data[<span class="string">'comment_count'</span>]/(data[<span class="string">'interval'</span>]+<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">df = data.set_index(keys=<span class="string">'title'</span>).groupby(by=[<span class="string">'category'</span>])[<span class="string">'channelTitle'</span>,<span class="string">'growth_rate_view'</span>].apply(</span><br><span class="line">    <span class="keyword">lambda</span> g: g.nlargest(<span class="number">10</span>,<span class="string">'growth_rate_view'</span>))</span><br><span class="line">df.head(<span class="number">40</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>channelTitle</th>
+      <th>growth_rate_view</th>
+    </tr>
+    <tr>
+      <th>category</th>
+      <th>title</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="10" valign="top">Autos &amp; Vehicles</th>
+      <th>Model Y Unveil</th>
+      <td>Tesla</td>
+      <td>7.108547e+05</td>
+    </tr>
+    <tr>
+      <th>Model Y Unveil</th>
+      <td>Tesla</td>
+      <td>6.863875e+05</td>
+    </tr>
+    <tr>
+      <th>Model Y Unveil</th>
+      <td>Tesla</td>
+      <td>6.026014e+05</td>
+    </tr>
+    <tr>
+      <th>Here's Why the 2019 BMW X7 Is the Best Big Luxury SUV</th>
+      <td>Doug DeMuro</td>
+      <td>5.409695e+05</td>
+    </tr>
+    <tr>
+      <th>Model Y Unveil</th>
+      <td>Tesla</td>
+      <td>5.373847e+05</td>
+    </tr>
+    <tr>
+      <th>The Saleen S7 Is the Craziest Supercar Nobody Knows About</th>
+      <td>Doug DeMuro</td>
+      <td>5.163707e+05</td>
+    </tr>
+    <tr>
+      <th>The Saleen S7 Is the Craziest Supercar Nobody Knows About</th>
+      <td>Doug DeMuro</td>
+      <td>4.721725e+05</td>
+    </tr>
+    <tr>
+      <th>Model Y Unveil</th>
+      <td>Tesla</td>
+      <td>4.669276e+05</td>
+    </tr>
+    <tr>
+      <th>Model Y Unveil</th>
+      <td>Tesla</td>
+      <td>4.177008e+05</td>
+    </tr>
+    <tr>
+      <th>The Saleen S7 Is the Craziest Supercar Nobody Knows About</th>
+      <td>Doug DeMuro</td>
+      <td>4.139040e+05</td>
+    </tr>
+    <tr>
+      <th rowspan="10" valign="top">Comedy</th>
+      <th>Maisie Williams Accidentally Drops a Major Spoiler in Game of Thrones' Final Season</th>
+      <td>The Tonight Show Starring Jimmy Fallon</td>
+      <td>3.014781e+06</td>
+    </tr>
+    <tr>
+      <th>Maisie Williams Accidentally Drops a Major Spoiler in Game of Thrones' Final Season</th>
+      <td>The Tonight Show Starring Jimmy Fallon</td>
+      <td>2.615266e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.510830e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.428940e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.378457e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.252175e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.215552e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.157888e+06</td>
+    </tr>
+    <tr>
+      <th>The Spiders and the Bees</th>
+      <td>TheOdd1sOut</td>
+      <td>2.006741e+06</td>
+    </tr>
+    <tr>
+      <th>A Tour Of My Plants</th>
+      <td>JennaMarbles</td>
+      <td>1.877655e+06</td>
+    </tr>
+    <tr>
+      <th rowspan="10" valign="top">Education</th>
+      <th>What If We Detonated All Nuclear Bombs at Once?</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>1.755290e+06</td>
+    </tr>
+    <tr>
+      <th>What If We Detonated All Nuclear Bombs at Once?</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>1.649115e+06</td>
+    </tr>
+    <tr>
+      <th>What If We Detonated All Nuclear Bombs at Once?</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>1.474106e+06</td>
+    </tr>
+    <tr>
+      <th>What If We Detonated All Nuclear Bombs at Once?</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>1.264566e+06</td>
+    </tr>
+    <tr>
+      <th>The Origin of Consciousness – How Unaware Things Became Aware</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>1.178408e+06</td>
+    </tr>
+    <tr>
+      <th>The Origin of Consciousness – How Unaware Things Became Aware</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>9.911678e+05</td>
+    </tr>
+    <tr>
+      <th>The Origin of Consciousness – How Unaware Things Became Aware</th>
+      <td>Kurzgesagt – In a Nutshell</td>
+      <td>8.159958e+05</td>
+    </tr>
+    <tr>
+      <th>9 PEOPLE YOU DON'T WANT TO MESS WITH</th>
+      <td>#Mind Warehouse</td>
+      <td>8.003252e+05</td>
+    </tr>
+    <tr>
+      <th>9 PEOPLE YOU DON'T WANT TO MESS WITH</th>
+      <td>#Mind Warehouse</td>
+      <td>7.784711e+05</td>
+    </tr>
+    <tr>
+      <th>9 PEOPLE YOU DON'T WANT TO MESS WITH</th>
+      <td>#Mind Warehouse</td>
+      <td>7.491722e+05</td>
+    </tr>
+    <tr>
+      <th rowspan="10" valign="top">Entertainment</th>
+      <th>Marvel Studios' Avengers: Endgame - Official Trailer</th>
+      <td>Marvel Entertainment</td>
+      <td>2.232652e+07</td>
+    </tr>
+    <tr>
+      <th>EXPERIMENT: LAVA vs FISH</th>
+      <td>SkyBek</td>
+      <td>2.203405e+07</td>
+    </tr>
+    <tr>
+      <th>Marvel Studios' Avengers: Endgame - Official Trailer</th>
+      <td>Marvel Entertainment</td>
+      <td>2.012123e+07</td>
+    </tr>
+    <tr>
+      <th>Marvel Studios' Avengers: Endgame - Official Trailer</th>
+      <td>Marvel Entertainment</td>
+      <td>1.878956e+07</td>
+    </tr>
+    <tr>
+      <th>EXPERIMENT: LAVA vs FISH</th>
+      <td>SkyBek</td>
+      <td>1.586332e+07</td>
+    </tr>
+    <tr>
+      <th>Marvel Studios' Avengers: Endgame - Official Trailer</th>
+      <td>Marvel Entertainment</td>
+      <td>1.572887e+07</td>
+    </tr>
+    <tr>
+      <th>EXPERIMENT: LAVA vs FISH</th>
+      <td>SkyBek</td>
+      <td>1.226287e+07</td>
+    </tr>
+    <tr>
+      <th>Marvel Studios' Avengers: Endgame - Official Trailer</th>
+      <td>Marvel Entertainment</td>
+      <td>1.169769e+07</td>
+    </tr>
+    <tr>
+      <th>Marvel Studios' Avengers: Endgame - Official Trailer</th>
+      <td>Marvel Entertainment</td>
+      <td>1.040558e+07</td>
+    </tr>
+    <tr>
+      <th>Kalank | Official Teaser | Varun | Aditya Roy | Sanjay | Alia | Sonakshi | Madhuri | Abhishek Varman</th>
+      <td>FoxStarHindi</td>
+      <td>1.033005e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>We found the top videos with highest growth rates of views were published by certain youtube channels, meaning that these channels can attract lots of people in a short time. So, advertisers and investors can find valuable channels to cooperate.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Channel=pd.DataFrame(data[<span class="string">'channelTitle'</span>].groupby(by=[data[<span class="string">'channelTitle'</span>],data[<span class="string">'category'</span>]]).count())</span><br><span class="line">Channel.columns=[<span class="string">'count'</span>]</span><br><span class="line">Top_channel=Channel.nlargest(<span class="number">100</span>,[<span class="string">'count'</span>])</span><br><span class="line">Top_channel</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>channelTitle</th>
+      <th>category</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>American Idol</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Billie Eilish</th>
+      <th>Music</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Binging with Babish</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>BuzzFeedVideo</th>
+      <th>People &amp; Blogs</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>CinemaSins</th>
+      <th>Film &amp; Animation</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Cleetus McFarland</th>
+      <th>Film &amp; Animation</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Doug DeMuro</th>
+      <th>Autos &amp; Vehicles</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>FBE</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Good Mythical MORE</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Good Mythical Morning</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Gordon Ramsay</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>James Charles</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>JennaMarbles</th>
+      <th>Comedy</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Linus Tech Tips</th>
+      <th>Science &amp; Technology</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Marques Brownlee</th>
+      <th>Science &amp; Technology</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Netflix</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Philip DeFranco</th>
+      <th>News &amp; Politics</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>REACT</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Rosanna Pansino</th>
+      <th>Howto &amp; Style</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Skip and Shannon: UNDISPUTED</th>
+      <th>Sports</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Strictly Dumpling</th>
+      <th>Travel &amp; Events</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Tati</th>
+      <th>Howto &amp; Style</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>The King of Random</th>
+      <th>Education</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>The Slow Mo Guys</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>The Voice</th>
+      <th>Entertainment</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>Unbox Therapy</th>
+      <th>Science &amp; Technology</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>goonzquad</th>
+      <th>Howto &amp; Style</th>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>DOPE or NOPE</th>
+      <th>Comedy</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>Ladylike</th>
+      <th>People &amp; Blogs</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>NFL</th>
+      <th>Sports</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>VICE</th>
+      <th>Entertainment</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>ibighit</th>
+      <th>Music</th>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>First We Feast</th>
+      <th>Entertainment</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>GQ</th>
+      <th>Entertainment</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>LaurDIY</th>
+      <th>Howto &amp; Style</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>SSSniperWolf</th>
+      <th>Entertainment</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>Safiya Nygaard</th>
+      <th>People &amp; Blogs</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>Saturday Night Live</th>
+      <th>Entertainment</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>The Tonight Show Starring Jimmy Fallon</th>
+      <th>Comedy</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>The Verge</th>
+      <th>Science &amp; Technology</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>jypentertainment</th>
+      <th>Music</th>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>BillieEilishVEVO</th>
+      <th>Music</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Complex</th>
+      <th>Entertainment</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Domics</th>
+      <th>Comedy</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Fortnite</th>
+      <th>Gaming</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Jimmy Kimmel Live</th>
+      <th>Entertainment</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Kristopher London</th>
+      <th>Sports</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Lil Skies</th>
+      <th>Music</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Lionsgate Movies</th>
+      <th>Film &amp; Animation</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>NBC World of Dance</th>
+      <th>Entertainment</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Robby</th>
+      <th>People &amp; Blogs</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>Tasty</th>
+      <th>Howto &amp; Style</th>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>B/R Football</th>
+      <th>Sports</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Channel Awesome</th>
+      <th>Entertainment</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>DailyDrivenExotics</th>
+      <th>Autos &amp; Vehicles</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Epicurious</th>
+      <th>Entertainment</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Jeopardy!</th>
+      <th>Entertainment</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Mnet K-POP</th>
+      <th>Entertainment</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>Smosh</th>
+      <th>Comedy</th>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>THE PRINCE FAMILY</th>
+      <th>People &amp; Blogs</th>
+      <td>15</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 1 columns</p>
+</div>
+
+
+
+<p>We would like to know which channels are the most productive, and what categories they belong to. so we find the top 100 channels that have the most videos pop up on trending. It seems that these channels with 24videos get on trending every day, so we will explore more on these channels.</p>
+<h1 id="Sentiment-Analysis"><a href="#Sentiment-Analysis" class="headerlink" title="Sentiment Analysis"></a>Sentiment Analysis</h1><p>The goal of performing sentiment analysis here is to identify the keywords associated with a video to be able to categorize them. For example, a video with the title “BBC Channel” will belong to the News &amp; Politics category and so on. Similarly, We also perform word cloud on description and tags of the video to get a visual representation of what audiences are saying about YouTube Trending videos.</p>
+<p>We intend to get new video ideas by seeing what audiences are talking most about in YouTube Trending videos, obtain a quick overall sense for how a video performed and what audiences think about it and understand if audiences have a positive or negative sentiment about a specific category video.  We could recommend a detailed trending YouTube Video image description to help investors and advertisers to identify those potential trending videos and meet audiences sentiment demand. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">entertainment = data[data[<span class="string">'category'</span>]==<span class="string">'Entertainment'</span>]</span><br><span class="line">channels = entertainment[<span class="string">'channelId'</span>].unique()</span><br><span class="line">print(<span class="string">"The total number of channels is &#123;&#125;."</span>.format(len(channels)))</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>The total number of channels is 190.</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">category_list = data[<span class="string">'category'</span>].unique()</span><br><span class="line">category_list</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([&apos;Comedy&apos;, &apos;Music&apos;, &apos;Sports&apos;, &apos;Film &amp; Animation&apos;, &apos;Entertainment&apos;,
+       &apos;Autos &amp; Vehicles&apos;, &apos;Howto &amp; Style&apos;, &apos;Science &amp; Technology&apos;,
+       &apos;Gaming&apos;, &apos;Travel &amp; Events&apos;, &apos;News &amp; Politics&apos;, &apos;People &amp; Blogs&apos;,
+       &apos;Education&apos;, &apos;Pets &amp; Animals&apos;], dtype=object)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Collect all the related stopwords.</span></span><br><span class="line">en_stopwords = list(stopwords.words(<span class="string">'english'</span>))</span><br><span class="line">polarities = list()</span><br><span class="line">MAX_N=<span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> category_list:</span><br><span class="line">    tags_word = data[data[<span class="string">'category'</span>]==i][<span class="string">'tags'</span>].str.lower().str.cat(sep=<span class="string">' '</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># removes punctuation,numbers and returns list of words</span></span><br><span class="line">    tags_word = re.sub(<span class="string">'[^A-Za-z]+'</span>, <span class="string">' '</span>, tags_word)</span><br><span class="line">    word_tokens = word_tokenize(tags_word)</span><br><span class="line">    filtered_sentence = [w <span class="keyword">for</span> w <span class="keyword">in</span> word_tokens <span class="keyword">if</span> <span class="keyword">not</span> w <span class="keyword">in</span> en_stopwords]</span><br><span class="line">    without_single_chr = [word <span class="keyword">for</span> word <span class="keyword">in</span> filtered_sentence <span class="keyword">if</span> len(word) &gt; <span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove numbers</span></span><br><span class="line">    cleaned_data_title = [word <span class="keyword">for</span> word <span class="keyword">in</span> without_single_chr <span class="keyword">if</span> <span class="keyword">not</span> word.isdigit()]      </span><br><span class="line">    </span><br><span class="line"><span class="comment"># Calculate frequency distribution</span></span><br><span class="line">    word_dist = nltk.FreqDist(cleaned_data_title)</span><br><span class="line">    hnhk = pd.DataFrame(word_dist.most_common(MAX_N),</span><br><span class="line">                    columns=[<span class="string">'Word'</span>, <span class="string">'Frequency'</span>])</span><br><span class="line"></span><br><span class="line">    compound = <span class="number">.0</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> hnhk[<span class="string">'Word'</span>].head(MAX_N):</span><br><span class="line">        compound += SentimentIntensityAnalyzer().polarity_scores(word)[<span class="string">'compound'</span>]</span><br><span class="line"></span><br><span class="line">    polarities.append(compound)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">category_list = pd.DataFrame(category_list)</span><br><span class="line">polarities = pd.DataFrame(polarities)</span><br><span class="line">tags_sentiment = pd.concat([category_list,polarities],axis=<span class="number">1</span>)</span><br><span class="line">tags_sentiment.columns = [<span class="string">'category'</span>,<span class="string">'polarity'</span>]</span><br><span class="line">tags_sentiment=tags_sentiment.sort_values(<span class="string">'polarity'</span>).reset_index()</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">16</span>,<span class="number">10</span>))</span><br><span class="line">ax = sns.barplot(x=tags_sentiment[<span class="string">'polarity'</span>],y=tags_sentiment[<span class="string">'category'</span>], data=tags_sentiment)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">"Categories"</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Polarity"</span>,fontsize=<span class="number">20</span>)</span><br><span class="line">plt.yticks(fontsize=<span class="number">15</span>) </span><br><span class="line">plt.xticks(fontsize=<span class="number">15</span>)</span><br><span class="line">plt.title(<span class="string">"\nPolarity of Different Categories videos\n"</span>, fontsize=<span class="number">25</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_54_1.png" alt="png"></p>
+<p>By using sentiment analyzer from NLTK, we can examine the polarities of tags from all category Youtube Trending Videos. The News&amp; Politics category, at (-10), has not only the highest share of negative polarity sentiment but also the highest percentage of  comments_count. , which indicates the sentiment of audiences usually critical; Considering that political issues are often polarizing topics, this result seems to be reasonable.</p>
+<p>While Entertainment, music, and sports videos have positive polarity. The categories of videos have a specific type of audiences. We recommend that the audiences watching Positive polarity videos if the audiences have a Harmonious atmosphere party because the relatively higher positive polarity videos are usually family-friendly and those videos will also have a higher positive comment.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">word_cloud</span><span class="params">(data)</span>:</span></span><br><span class="line">    plt.figure(figsize = (<span class="number">20</span>,<span class="number">15</span>),facecolor = <span class="literal">None</span>)</span><br><span class="line">    cloud = WordCloud(background_color = <span class="string">'black'</span>, colormap=<span class="string">"tab20b_r"</span>,max_words=<span class="number">2000</span>, max_font_size=<span class="number">40</span>, random_state=<span class="number">42</span>)</span><br><span class="line">    cloud.generate(<span class="string">' '</span>.join(data))</span><br><span class="line">    plt.imshow(cloud)</span><br><span class="line">    plt.axis(<span class="string">'off'</span>)</span><br><span class="line">    plt.title(<span class="string">"\nWord cloud for "</span> + <span class="string">'data'</span> + <span class="string">"\n"</span>, fontsize=<span class="number">45</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tags_word = data[data[<span class="string">'category'</span>]==<span class="string">'Entertainment'</span>][<span class="string">'tags'</span>].str.lower().str.cat(sep=<span class="string">' '</span>)</span><br><span class="line"></span><br><span class="line">word_tokens = word_tokenize(tags_word)</span><br><span class="line">filtered_sentence = [w <span class="keyword">for</span> w <span class="keyword">in</span> word_tokens <span class="keyword">if</span> <span class="keyword">not</span> w <span class="keyword">in</span> en_stopwords]</span><br><span class="line">without_single_chr = [word <span class="keyword">for</span> word <span class="keyword">in</span> filtered_sentence <span class="keyword">if</span> len(word) &gt; <span class="number">2</span>]</span><br><span class="line">cleaned_data_title = [word <span class="keyword">for</span> word <span class="keyword">in</span> without_single_chr <span class="keyword">if</span> <span class="keyword">not</span> word.isdigit()]</span><br><span class="line"></span><br><span class="line">word_cloud(cleaned_data_title)</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_57_0.png" alt="png"></p>
+<p>Further, we performed word cloud on the top three highest positive polarity categories, which are Entertainment, People &amp; Blogs and Sports to get a deep sentiment analysis of those audiences and what are the most frequently mentioned keyword in those positive sentiment videos.  The most frequently repeated keywords of visual representation for Entainment category are Kitchen and  David Dobrik, which indicates audiences favourite entertainment activities locations include Kitchen and investors or advertisers have a potentially successful business corporation with YouTuber, David Dobrik. It is a positive win-win circumstance.</p>
+<h1 id="Project-Summary"><a href="#Project-Summary" class="headerlink" title="Project Summary"></a>Project Summary</h1><p>First we clean the data and process the data for data analysis, which include remove NAs, data reformat, create new variables, and look up the distribution of data to see if all data are reasonable. By exploring data we find these general statistic results, like the relations among site traffic KPIs, which categoty has the most channels and video, what category people are concerned the most, which channels have the frequency of video appearance, what’s the peroid time to become a trending video, which categories have negative sentiment,etc. For example, Pet&amp;Animals, Travel may be very potential categories since they got a lot of attention but only a few channels show up, so we will look at the details from these categories. So far we just have a general view of different aspects of data, and we cannot make any conclusion yet. </p>
+<p>The next stage we will analysis based on these statistic results we found and dig into details. We will calculate the average growth rates by dividing counted values to time intervals, and weight the popularity rate, engagement rate to get a final ranking results. We will keep looking down into channels by categories since different category represents a different group of audience, and we will analyse the behaviors/phenomenon behind these statistics, like the changing rate of the like/dislike ratio. We found that there are many trending videos managed to get a large number of views counts, but they have very few likes, so we could analyze the reason for this abnormal situation. In addition, for the overall report quality, we will revise our graphs for better visualization to make a comprehensive performance evaluation further. For the sentiment analysis part, we will revise the word cloud algorithm to have more valuable and informational tags appear, and we have planned for additional analysis for description sentiment. </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Data-Visualization/" rel="tag"># Data Visualization</a>
+              <a href="/tags/Exploratory-Data-Analysis/" rel="tag"># Exploratory Data Analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/15/Titanic_Project/" rel="prev" title="Exploratory Data Analysis on Titanic Data">
+      <i class="fa fa-chevron-left"></i> Exploratory Data Analysis on Titanic Data
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Objective"><span class="nav-number">2.1.</span> <span class="nav-text">1.Objective</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Data-description"><span class="nav-number">2.2.</span> <span class="nav-text">2. Data description</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Explore-Data-Analysis"><span class="nav-number">3.</span> <span class="nav-text">Explore Data Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Data-Processing"><span class="nav-number">3.1.</span> <span class="nav-text">1. Data Processing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Data-Visualization"><span class="nav-number">3.2.</span> <span class="nav-text">2. Data Visualization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sentiment-Analysis"><span class="nav-number">4.</span> <span class="nav-text">Sentiment Analysis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Project-Summary"><span class="nav-number">5.</span> <span class="nav-text">Project Summary</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yvette Zheng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yvette Zheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
